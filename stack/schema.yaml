@@ -1,7 +1,7 @@
 title: "Hackathon Starter Kit on OCI using Always Free"
 description: "Hackathon Starter Kit on OCI using Always Free Compute and MySQL HeatWave"
-schemaVersion: 1.0.0
-version: "2025073001"
+schemaVersion: 1.1.0
+version: "2025090501"
 locale: "en"
 
 
@@ -34,7 +34,6 @@ variableGroups:
       - node_shape
       - node_flex_shape_ocpus
       - node_flex_shape_memory
-      - mysql_shape
 
   - title: Network
     visible: true
@@ -58,6 +57,12 @@ variableGroups:
       - existing_private_security_list_ocid
       - existing_private_subnet_ocid
 
+ - title: MySQL HeatWave DBSystem
+   visible: true
+   variables:
+      - useCredits
+      - mysql_shape
+
 variables:
   region:
     type: oci:identity:region:name
@@ -66,10 +71,20 @@ variables:
     title: ${Messages.solutionsHub.genericVariables.region.title()}
     description: ${Messages.solutionsHub.genericVariables.region.description()}
 
+  useCredits:
+    title: Use your credits for a more powerful MySQL HeatWave DBSystem
+    type: boolean
+    default: false
+
   useExistingInfra:
     title: Use Existing Infrastructure Resources
     type: boolean
     default: false
+
+  mysql_shape:
+    title: MySQL HeatWave Shape
+    type: string
+    default: "MySQL.8"
 
   node_shape:
     type: oci:core:instanceshape:name

@@ -96,7 +96,7 @@ variable "node_image_id" {
 }
 
 variable "node_shape" {
-  description = "Instance shape to use for master instance. "
+  description = "Instance shape to use as Webserver. "
   default     = "VM.Standard.A1.Flex"
 }
 
@@ -108,6 +108,16 @@ variable "node_flex_shape_ocpus" {
 variable "node_flex_shape_memory" {
   description = "Flex Instance shape Memory (GB)"
   default = 24
+}
+
+variable "useCredits" {
+  type    = bool
+  default = false
+}
+
+variable "mysql_shape" {
+  description = "MySQL HeatWave DBSystem shape to use. "
+  default     = "MySQL.Free"
 }
 
 variable "label_prefix" {
