@@ -1,5 +1,5 @@
 output "webserver_public_ip" {
-  value = "http://${module.webserver.public_ip}"
+  value = "${module.webserver.public_ip}"
 }
 
 output "heatwave_private_ip" {
