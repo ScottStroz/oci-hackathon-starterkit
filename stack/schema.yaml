@@ -1,7 +1,7 @@
 title: "Hackathon Starter Kit on OCI using Always Free"
 description: "Hackathon Starter Kit on OCI using Always Free Compute and MySQL HeatWave"
-schemaVersion: 1.1.0
-version: "2025090501"
+schemaVersion: 1.2.1
+version: "2025111801"
 locale: "en"
 
 
@@ -41,6 +41,12 @@ variableGroups:
       - vcn
       - vcn_cidr
 
+  - title: MySQL HeatWave DBSystem
+    visible: true
+    variables:
+      - useCredits
+      - mysql_shape
+
   - title: Use Existing Infrastructure
     visible: true
     variables:
@@ -57,11 +63,6 @@ variableGroups:
       - existing_private_security_list_ocid
       - existing_private_subnet_ocid
 
- - title: MySQL HeatWave DBSystem
-   visible: true
-   variables:
-      - useCredits
-      - mysql_shape
 
 variables:
   region:
@@ -82,8 +83,9 @@ variables:
     default: false
 
   mysql_shape:
-    title: MySQL HeatWave Shape
     type: string
+    visible: ${useCredits}
+    title: MySQL HeatWave Shape
     default: "MySQL.8"
 
   node_shape:
@@ -103,16 +105,13 @@ variables:
     description: "Choose number GB for Flex Shape Memory."
     visible:
       and:
-        -or:
+        - or:
           - eq:
             - node_shape
             - "VM.Standard.A1.Flex"
           - eq:
             - node_shape
             - "VM.Standard.A2.Flex"
-          - eq:
-            - node_shape
-            - "VM.Standard.E2.1.Micro"
           - eq:
             - node_shape
             - "VM.Standard.E3.Flex"
@@ -140,16 +139,13 @@ variables:
     description: "Choose number of OCPUs for Flex Shape."
     visible:
       and:
-        -or:
+        - or:
           - eq:
             - node_shape
             - "VM.Standard.A1.Flex"
           - eq:
             - node_shape
             - "VM.Standard.A2.Flex"
-          - eq:
-            - node_shape
-            - "VM.Standard.E2.1.Micro"
           - eq:
             - node_shape
             - "VM.Standard.E3.Flex"

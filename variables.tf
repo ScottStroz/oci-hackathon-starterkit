@@ -4,7 +4,7 @@ variable "tenancy_ocid" {
 
 variable "user_ocid" {
   description = "User's OCID"
-  default = ""
+  default     = ""
 }
 
 variable "compartment_ocid" {
@@ -102,12 +102,12 @@ variable "node_shape" {
 
 variable "node_flex_shape_ocpus" {
   description = "Flex Instance shape OCPUs"
-  default = 4
+  default     = 4
 }
 
 variable "node_flex_shape_memory" {
   description = "Flex Instance shape Memory (GB)"
-  default = 24
+  default     = 24
 }
 
 variable "useCredits" {
@@ -127,7 +127,7 @@ variable "label_prefix" {
 
 variable "admin_password" {
   description = "Password for the root user for MySQL Database Service"
-  default = "MyPassw0rd!"
+  default     = "MyPassw0rd!"
 }
 
 variable "ssh_authorized_keys_path" {
@@ -151,7 +151,7 @@ variable "web_instance_name" {
 }
 
 variable "admin_username" {
-    description = "Username of the HeatWave MySQL admin account"
-    default     = "admin"
+  description = "Username of the HeatWave MySQL admin account"
+  default     = "admin"
 }
 
