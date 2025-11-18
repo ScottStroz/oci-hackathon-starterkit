@@ -10,6 +10,6 @@ The same modules are used as Resource Manager Stack.
 
 The latest stack can be downloaded directly in the releases (the zip file)
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/lefred/oci-hackathon-starterkit/releases/download/v1.1.0/oci-hackathon-starterkit-stack.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/lefred/oci-hackathon-starterkit/releases/download/v1.2.0/oci-hackathon-starterkit-stack.zip)
 
 Please check the [Wiki](https://github.com/lefred/oci-hackathon-starterkit/wiki) to learn how to use the Hackathon StarterKit.
