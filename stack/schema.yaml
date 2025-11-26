@@ -1,7 +1,7 @@
 title: "Hackathon Starter Kit on OCI using Always Free"
 description: "Hackathon Starter Kit on OCI using Always Free Compute and MySQL HeatWave"
-schemaVersion: 1.2.1
-version: "2025111801"
+schemaVersion: 1.3.0
+version: "2025112601"
 locale: "en"
 
 
