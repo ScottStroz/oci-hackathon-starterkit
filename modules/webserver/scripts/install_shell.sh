@@ -12,6 +12,13 @@ yum install -y java-21-openjdk maven
 yum install -y npm
 yum install -y httpd
 
+# check if shell is installed and force manual installation
+which mysqlsh > /dev/null 2>&1
+if [ $? -eq 1 ]; 
+then 
+  rpm -ivh https://repo.mysql.com/yum/mysql-tools-innovation-community/el/$(uname -r | sed 's/^.*el\([0-9]\+\).*$/\1/')/x86_64/mysql-shell-9.5.0-1.$(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/').x86_64.rpm
+fi
+
 echo "MySQL Shell successfully installed !"
 
 firewall-cmd --zone=public --permanent --add-port=80/tcp
