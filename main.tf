@@ -248,7 +248,7 @@ module "webserver" {
 data "oci_mysql_mysql_configurations" "shape" {
   compartment_id = var.compartment_ocid
   type           = ["DEFAULT"]
-  shape_name     = "MySQL.Free"
+  shape_name     = local.effective_mysql_shape 
 }
 
 
