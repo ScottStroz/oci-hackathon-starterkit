@@ -43,3 +43,7 @@ variable "existing_mds_instance_id" {
   description = "OCID of an existing MDS instance to use"
   default     = ""
 }
+
+variable "mysql_version" {
+   default = "9.5.1"
+}
