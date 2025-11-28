@@ -1,6 +1,7 @@
 
 locals {
     db_system_id = var.existing_mds_instance_id ==  "" ? oci_mysql_mysql_db_system.MDSinstance[0].id : var.existing_mds_instance_id
+    cluster_shape = var.mysql_shape == "MySQL.Free" ? "HeatWave.Free" : "MySQL.HeatWave.VM.Standard"
 }
 
 resource "oci_mysql_mysql_db_system" "MDSinstance" {
@@ -36,7 +37,7 @@ resource "oci_mysql_heat_wave_cluster" "heat_wave_cluster" {
     #Required
     db_system_id  = local.db_system_id
     cluster_size  = 1
-    shape_name    = "HeatWave.Free"
+    shape_name    = local.cluster_shape
     is_lakehouse_enabled = true
     count = 1
 }
