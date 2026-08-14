@@ -8,7 +8,7 @@ This initial infrastructure is an excellent starting point for a hackathon proje
 
 The same modules are used as Resource Manager Stack.
 
-The latest stack can be downloaded directly in the releases (the zip file)
+The latest stack ZIP is available from the [v1.4.1 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.4.1).
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ScottStroz/oci-hackathon-starterkit/releases/download/v1.4.1/oci-hackathon-starterkit-stack.zip)
 
@@ -80,7 +80,7 @@ The job prints the output at the end of the logs:
 
 You can follow the entire deployment process on this video:
 
-https://github.com/user-attachments/assets/3cda5c48-1189-4dc4-9036-b17ba17da71c
+[Watch the deployment video](https://github.com/user-attachments/assets/3cda5c48-1189-4dc4-9036-b17ba17da71c)
 
 ### 3. Connect to the compute instance
 
@@ -124,7 +124,7 @@ In Vim, I use the command:
 
 You can also check this video:
 
-https://github.com/user-attachments/assets/75f96eed-cb99-4b56-b27d-7cdb51bb4c53
+[Watch the SSH-key video](https://github.com/user-attachments/assets/75f96eed-cb99-4b56-b27d-7cdb51bb4c53)
 
 ### 4. Which application languages are available?
 
@@ -136,7 +136,7 @@ The Java versions installed are OpenJDK 17 and 21.
 
 The `alternatives` system can be used to switch versions:
 
-```
+```shell
 $ java --version
 openjdk 17.0.16 2025-07-15 LTS
 OpenJDK Runtime Environment (Red_Hat-17.0.16.0.8-2.0.1) (build 17.0.16+8-LTS)
@@ -163,7 +163,7 @@ OpenJDK 64-Bit Server VM (Red_Hat-21.0.8.0.9-1.0.1) (build 21.0.8+9-LTS, mixed m
 
 The installed version of NodeJS is 16:
 
-```
+```shell
 $ node --version
 v16.20.2
 ```
@@ -172,14 +172,14 @@ v16.20.2
 
 The default installed version of Python is 3.9:
 
-```
+```shell
 $ python --version
 Python 3.9.21
 ```
 
 But you can also install manually a newer version (3.12):
 
-```
+```shell
 $ sudo dnf install -y python312
 ...
 $ python3.12 --version
@@ -188,7 +188,7 @@ Python 3.12.9
 
 You can see this in the video:
 
-https://github.com/user-attachments/assets/c2bd05d5-2af0-4ea3-917e-9eca31b3c1b0
+[Watch the language-installation video](https://github.com/user-attachments/assets/c2bd05d5-2af0-4ea3-917e-9eca31b3c1b0)
 
 ### 5. Connect to MySQL HeatWave
 
@@ -204,7 +204,7 @@ MySQL Shell is already installed on the Compute Instance. From it, when connecte
 
 Check the video:
 
-https://github.com/user-attachments/assets/3d4e3030-d350-4600-bb54-c3c16f7344a4
+[Watch the MySQL Shell video](https://github.com/user-attachments/assets/3d4e3030-d350-4600-bb54-c3c16f7344a4)
 
 #### MySQL Shell for Visual Studio Code
 
@@ -214,7 +214,7 @@ We need to create or update our `~/.oci/config` file to use a new API Key for ou
 
 Check the video with all the steps:
 
-https://github.com/user-attachments/assets/0940835d-7b26-4cb9-b96a-b11ecb29de54
+[Watch the Visual Studio Code video](https://github.com/user-attachments/assets/0940835d-7b26-4cb9-b96a-b11ecb29de54)
 
 #### OCI Console's Cloud Shell
 
@@ -224,7 +224,7 @@ You need first to use an "Ephemeral private network" that uses your VCN and your
 
 Then you connect using the DBSystem's private IP, like in the video:
 
-https://github.com/user-attachments/assets/8fc02692-b81a-49f4-be8f-a8fe079b390e
+[Watch the Cloud Shell video](https://github.com/user-attachments/assets/8fc02692-b81a-49f4-be8f-a8fe079b390e)
 
 ### 6. Use OCI GenAI
 
@@ -258,15 +258,15 @@ We copied the code for Python, and we modified it just a little bit to add our i
 
 Then we run the demo:
 
-```
-$ python demo.py
+```shell
+python demo.py
 ```
 
 ![GenAI Usage 3](https://github.com/user-attachments/assets/65b77d2f-97aa-42b5-b04c-87a9bd2d3d46)
 
 Let's see all this in action in the video below:
 
-https://github.com/user-attachments/assets/edb32d97-1532-44bf-a5b2-2269f7b24522
+[Watch the OCI GenAI video](https://github.com/user-attachments/assets/edb32d97-1532-44bf-a5b2-2269f7b24522)
 
 ### 7. Use HeatWave GenAI
 
@@ -276,16 +276,16 @@ When you are connected to the MySQL HeatWave instance you have deployed, you can
 
 #### Connecting in Python to your DB System
 
-To use MySQL in our Python application, we need to install the `python-mysql-connector`: 
+To use MySQL in our Python application, we need to install the `python-mysql-connector`:
 
-```
+```shell
 [opc@webserver ~]$ sudo dnf install -y pip
 [opc@webserver ~]$ pip install mysql-connector-python
 ```
 
 We already saw how we can connect, now let's connect from an application (a minimal Python script running on our compute instance):
 
-```
+```python
 import mysql.connector
 
 conn = mysql.connector.connect(
@@ -305,8 +305,8 @@ for row in rows:
 
 And when we run it, we can see:
 
-```
-[opc@webserver ~]$ python test_hw.py 
+```shell
+[opc@webserver ~]$ python test_hw.py
 ('9.4.1-cloud',)
 ```
 
@@ -314,7 +314,7 @@ And when we run it, we can see:
 
 We can do the same using a GenAI function provided by MySQL HeatWave:
 
-```
+```python
 import mysql.connector
 
 conn = mysql.connector.connect(
@@ -336,13 +336,13 @@ And this is the output:
 
 ![HeatWave GenAI](https://github.com/user-attachments/assets/1abff03a-29b2-49ce-b9ef-8e23b4b7fedf)
 
-#### More Info
+#### HeatWave GenAI documentation
 
-* https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html
+- [HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
 
 Let's recap in video:
 
-https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90
+[Watch the HeatWave GenAI video](https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90)
 
 ### 8. Use MySQL REST Service (MRS)
 
@@ -362,19 +362,19 @@ This enables us to provide access to data without requiring SQL. It also provide
 
 To be able to use the MRS functionalities available in MySQL Shell for Visual Studio Code, we need to grant some privileges to our admin user:
 
-```
+```sql
 sql> GRANT 'mysql_rest_service_admin' TO 'admin'@'%';
 sql> SET DEFAULT ROLE ALL TO 'admin'@'%';
 ```
 
-_It's recommended to close the connection and reconnect for immediate grants_
+Note: Close the connection and reconnect for the grants to take effect immediately.
 
 We will use MySQL Shell for Visual Studio Code to create a new table and provide access to it using MRS.
 
-```
+```sql
 sql> create database myproject;
 sql> use myproject
-sql> create table myrecords (id int unsigned auto_increment primary key, 
+sql> create table myrecords (id int unsigned auto_increment primary key,
                              name varchar(20),
                              inserted timestamp default current_timestamp);
 sql> insert into myrecords values ('Scott'), ('Miguel'), ('Fred');
@@ -402,17 +402,17 @@ Since the schema hasn't been added to the service (we used a shortcut), MySQL Sh
 
 We also need to create a user to access our service. By default, the **MySQL App** is enabled.
 
-```
+```sql
 sql> create user myrest identified by 'myrestPassw0rd!';
 ```
 
-#### Accessing data using curl 
+#### Accessing data using curl
 
 In our compute instance, we can try to access our REST service using curl.
 
 We need first to create a cookie (the easiest method with curl):
 
-```
+```shell
 $ curl -c cookie.txt -k  -X POST  -H "Content-Type: application/json" \
    -d '{"username": "myrest",
         "password": "myrestPassw0rd!",
@@ -440,7 +440,7 @@ $ curl -s -b cookie.txt -k -X GET  https://10.0.1.57/myService/myproject/myrecor
 
 We can also specify a single record:
 
-```
+```shell
 $ curl -s -b cookie.txt -k -X GET  https://10.0.1.57/myService/myproject/myrecords/2 | jq
 {
   "id": 2,
@@ -455,7 +455,7 @@ $ curl -s -b cookie.txt -k -X GET  https://10.0.1.57/myService/myproject/myrecor
 
 Check the video to see the different steps in action:
 
-https://github.com/user-attachments/assets/8b7fc207-44a5-44db-8c64-399bbd878f2c
+[Watch the MRS setup video](https://github.com/user-attachments/assets/8b7fc207-44a5-44db-8c64-399bbd878f2c)
 
 #### Using the SDK
 
@@ -473,7 +473,7 @@ I modified the default address and selected Python language for the SDK:
 
 We copy that downloaded folder in our compute instance, and we need to rename it as sdk:
 
-```
+```shell
 [laptop]$ scp -i key.pem -r v1.mrs.sdk opc@<public_ip_of_the_compute>:
 
 [compute]$ mkdir myproject
@@ -483,7 +483,7 @@ We copy that downloaded folder in our compute instance, and we need to rename it
 
 And we create our Python application:
 
-```
+```python
 from sdk.my_service import *
 
 my_service = MyService(verify_tls_cert=False)
@@ -503,8 +503,8 @@ asyncio.run(main())
 
 And we can run it:
 
-```
-[opc@webserver myproject]$ python3.12 project.py 
+```shell
+[opc@webserver myproject]$ python3.12 project.py
 Scott
 Fred
 Miguel
@@ -512,9 +512,9 @@ Miguel
 
 Check the video to see how to use the SDK:
 
-https://github.com/user-attachments/assets/45e34c29-3eea-4804-a493-0736e0aedb1c
+[Watch the SDK video](https://github.com/user-attachments/assets/45e34c29-3eea-4804-a493-0736e0aedb1c)
 
-#### More Info
+#### Additional MRS documentation
 
-* https://dev.mysql.com/doc/dev/mysql-rest-service/latest/quickstart.html
-* https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html
+- [MRS quickstart](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/quickstart.html)
+- [MRS SDK documentation](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html)
