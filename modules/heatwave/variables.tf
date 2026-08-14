@@ -19,7 +19,7 @@ variable "subnet_id" {
 
 variable "mysql_shape" {
   description = "Instance shape to use."
-  default     = "MySQL.Free"
+  default     = "MySQL.2"
 }
 
 variable "admin_username" {
@@ -45,5 +45,5 @@ variable "existing_mds_instance_id" {
 }
 
 variable "mysql_version" {
-   default = "9.5.1"
+   default = "26.7.0"
 }
