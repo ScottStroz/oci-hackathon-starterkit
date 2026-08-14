@@ -117,7 +117,7 @@ variable "useCredits" {
 
 variable "mysql_shape" {
   description = "MySQL HeatWave DBSystem shape to use. "
-  default     = "MySQL.Free"
+  default     = "MySQL.8"
 }
 
 variable "label_prefix" {
