@@ -1,6 +1,6 @@
 # oci-hackathon-starterkit
 
-Deploy on OCI an always Free environment to start developing an application.
+Deploy on OCI to start developing an application.
 
 The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) , a compute instance as application server and an HeatWave MySQL Instance with HeatWave Cluster, Lakehouse and MySQL REST Service (MRS).
 
@@ -52,11 +52,11 @@ You will then be redirected to the OCI Resource Manager Stack console:
 
 Follow the wizard, choose an admin account and password, then you can also choose the shape for the compute and the MySQL DBSystem.
 
-For the compute instance, the default is to use the Always Free Ampere shape:
+For the compute instance, the default is to use the `VM.Standard.A2.Flex` shape:
 
 ![Compute Shape](https://github.com/user-attachments/assets/ab2ba5d9-9d48-48f0-ad13-762becfcac9b)
 
-However, not all regions still offer free Ampere instances. If it's the case, choose another shape such as `VM.Standard.E2.1.Micro`.
+However, you can choose another shape such as `VM.Standard.E2.1.Micro` if needed.
 
 By default, the Stack also deploys the always-free Trier MySQL HeatWave. But you can also use your credits to deploy a more powerful instance:
 
@@ -228,7 +228,7 @@ https://github.com/user-attachments/assets/8fc02692-b81a-49f4-be8f-a8fe079b390e
 
 ### 6. Use OCI GenAI
 
-You can use OCI GenAI Service (some are also always Free) directly in your code.
+You can use OCI GenAI Service directly in your code.
 
 We provide SDKs and sample code for several programming languages, including Java and Python.
 

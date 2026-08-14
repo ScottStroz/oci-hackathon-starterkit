@@ -1,4 +1,4 @@
-title: "Hackathon Starter Kit on OCI using Always Free"
+title: "Hackathon Starter Kit on OCI"
 description: "Hackathon Starter Kit on OCI using Compute and MySQL HeatWave instances"
 schemaVersion: 1.3.0
 version: "2025112601"
@@ -90,7 +90,7 @@ variables:
 
   node_shape:
     type: oci:core:instanceshape:name
-    title: "Select a shape for the Compute Instance (VM.Standard.A1.Flex and VM.Standard.E2.1.Micro are the only Always Free shapes)"
+    title: "Select a shape for the Compute Instance"
     dependsOn:
       compartmentId: compartment_ocid
 
