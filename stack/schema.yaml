@@ -39,6 +39,17 @@ variableGroups:
     visible: true
     variables:
       - database_deployment
+
+  - title: MySQL HeatWave Credentials
+    visible:
+      or:
+        - eq:
+          - database_deployment
+          - MySQL HeatWave
+        - eq:
+          - database_deployment
+          - Both
+    variables:
       - admin_username
       - admin_password
 
@@ -47,7 +58,7 @@ variableGroups:
       or:
         - eq:
           - database_deployment
-          - HeatWave
+          - MySQL HeatWave
         - eq:
           - database_deployment
           - Both
@@ -106,7 +117,7 @@ variables:
     title: Databases to Deploy
     description: Choose whether to deploy MySQL HeatWave, Autonomous Database, or both.
     enum:
-      - HeatWave
+      - MySQL HeatWave
       - Autonomous DB
       - Both
     default: Both
@@ -124,7 +135,7 @@ variables:
         - or:
           - eq:
             - database_deployment
-            - HeatWave
+            - MySQL HeatWave
           - eq:
             - database_deployment
             - Both
@@ -328,13 +339,13 @@ variables:
       or:
         - eq:
           - database_deployment
-          - HeatWave
+          - MySQL HeatWave
         - eq:
           - database_deployment
           - Both
     default: "admin"
     title: MySQL HeatWave Admin User's Name
-    description: Name for HeatWave MySQL Database Service's admin user
+    description: Name for MySQL HeatWave Database Service's admin user
     pattern: "^[a-zA-Z0-9_]{1,32}$"
 
   admin_password:
@@ -344,12 +355,12 @@ variables:
       or:
         - eq:
           - database_deployment
-          - HeatWave
+          - MySQL HeatWave
         - eq:
           - database_deployment
           - Both
     title: MySQL HeatWave Admin Password
-    description: Password for the HeatWave MySQL admin user
+    description: Password for the MySQL HeatWave admin user
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
 

@@ -15,7 +15,7 @@ ssh_private_key_path = "<REPLACE_ME>"
 
 admin_password = "MyPassw0rd!"
 
-# Choose HeatWave, Autonomous DB, or Both.
+# Choose MySQL HeatWave, Autonomous DB, or Both.
 database_deployment = "Both"
 
 # Used when database_deployment is Autonomous DB or Both. The name must be unique in the tenancy.

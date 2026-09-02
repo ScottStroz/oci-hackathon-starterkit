@@ -23,12 +23,12 @@ variable "mysql_shape" {
 }
 
 variable "admin_username" {
-    description = "Username of the HeatWave MySQL admin account"
+    description = "Username of the MySQL HeatWave admin account"
     default     = "admin"
 }
 
 variable "admin_password" {
-    description = "Password for the admin user for HeatWave MySQL"
+    description = "Password for the admin user for MySQL HeatWave"
 }
 
 variable "configuration_id" {

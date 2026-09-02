@@ -2,7 +2,7 @@
 
 Deploy on OCI to start developing an application.
 
-The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) and a compute instance as application server. You can choose to deploy a HeatWave MySQL Instance with HeatWave Cluster, Lakehouse and MySQL REST Service (MRS), a paid Autonomous Database, or both.
+The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) and a compute instance as application server. You can choose to deploy a MySQL HeatWave instance with MySQL HeatWave Cluster, Lakehouse and MySQL REST Service (MRS), a paid Autonomous Database, or both.
 
 This initial infrastructure is an excellent starting point for a hackathon project.
 
@@ -50,7 +50,7 @@ You will then be redirected to the OCI Resource Manager Stack console:
 
 ![Resource Manager](https://github.com/user-attachments/assets/95cc9fb6-f325-454d-bce8-0a24d22c45d8)
 
-Follow the wizard and choose HeatWave, Autonomous DB, or Both. HeatWave credentials appear only when HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy and an ADMIN password; it uses the smallest standard paid serverless configuration (2 ECPUs).
+Follow the wizard and choose MySQL HeatWave, Autonomous DB, or Both. MySQL HeatWave credentials appear only when MySQL HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy and an ADMIN password; it uses the smallest standard paid serverless configuration (2 ECPUs).
 
 For the compute instance, the default is to use the `VM.Standard.A2.Flex` shape:
 
@@ -268,11 +268,11 @@ Let's see all this in action in the video below:
 
 [Watch the OCI GenAI video](https://github.com/user-attachments/assets/edb32d97-1532-44bf-a5b2-2269f7b24522)
 
-### 7. Use HeatWave GenAI
+### 7. Use MySQL HeatWave GenAI
 
 It's also possible to directly use GenAI capabilities from the MySQL HeatWave database.
 
-When you are connected to the MySQL HeatWave instance you have deployed, you can call some HeatWave AI procedures from your program.
+When you are connected to the MySQL HeatWave instance you have deployed, you can call some MySQL HeatWave AI procedures from your program.
 
 #### Connecting in Python to your DB System
 
@@ -310,7 +310,7 @@ And when we run it, we can see:
 ('9.4.1-cloud',)
 ```
 
-#### Using HeatWave GenAI
+#### Using MySQL HeatWave GenAI
 
 We can do the same using a GenAI function provided by MySQL HeatWave:
 
@@ -334,15 +334,15 @@ for row in rows:
 
 And this is the output:
 
-![HeatWave GenAI](https://github.com/user-attachments/assets/1abff03a-29b2-49ce-b9ef-8e23b4b7fedf)
+![MySQL HeatWave GenAI](https://github.com/user-attachments/assets/1abff03a-29b2-49ce-b9ef-8e23b4b7fedf)
 
-#### HeatWave GenAI documentation
+#### MySQL HeatWave GenAI documentation
 
-- [HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
+- [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
 
 Let's recap in video:
 
-[Watch the HeatWave GenAI video](https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90)
+[Watch the MySQL HeatWave GenAI video](https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90)
 
 ### 8. Use MySQL REST Service (MRS)
 

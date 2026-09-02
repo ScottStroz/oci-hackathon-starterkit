@@ -116,13 +116,13 @@ variable "useCredits" {
 }
 
 variable "database_deployment" {
-  description = "Databases to deploy: HeatWave, Autonomous DB, or Both."
+  description = "Databases to deploy: MySQL HeatWave, Autonomous DB, or Both."
   type        = string
   default     = "Both"
 
   validation {
-    condition     = contains(["HeatWave", "Autonomous DB", "Both"], var.database_deployment)
-    error_message = "database_deployment must be HeatWave, Autonomous DB, or Both."
+    condition     = contains(["MySQL HeatWave", "Autonomous DB", "Both"], var.database_deployment)
+    error_message = "database_deployment must be MySQL HeatWave, Autonomous DB, or Both."
   }
 }
 
@@ -197,6 +197,6 @@ variable "web_instance_name" {
 }
 
 variable "admin_username" {
-  description = "Username of the HeatWave MySQL admin account"
+  description = "Username of the MySQL HeatWave admin account"
   default     = "admin"
 }
