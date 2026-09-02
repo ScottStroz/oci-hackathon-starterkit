@@ -15,10 +15,10 @@ ssh_private_key_path = "<REPLACE_ME>"
 
 admin_password = "MyPassw0rd!"
 
-# Choose HEATWAVE, AUTONOMOUS, or BOTH.
-database_deployment = "BOTH"
+# Choose HeatWave, Autonomous DB, or Both.
+database_deployment = "Both"
 
-# Used when database_deployment is AUTONOMOUS or BOTH. The name must be unique in the tenancy.
+# Used when database_deployment is Autonomous DB or Both. The name must be unique in the tenancy.
 autonomous_database_name = "HACKATHONADB"
 autonomous_database_compute_count = 2
 #autonomous_database_admin_password = "UseADifferentPassw0rd!"

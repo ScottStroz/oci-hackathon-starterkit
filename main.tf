@@ -21,8 +21,8 @@ locals {
     var.autonomous_database_admin_password != "" ?
     var.autonomous_database_admin_password : var.admin_password
   )
-  deploy_heatwave            = contains(["HEATWAVE", "BOTH"], var.database_deployment)
-  deploy_autonomous_database = contains(["AUTONOMOUS", "BOTH"], var.database_deployment)
+  deploy_heatwave            = contains(["HeatWave", "Both"], var.database_deployment)
+  deploy_autonomous_database = contains(["Autonomous DB", "Both"], var.database_deployment)
 }
 
 

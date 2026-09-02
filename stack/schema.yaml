@@ -22,12 +22,6 @@ variableGroups:
       - user_ocid
       - web_instance_name
 
-  - title: Required Variables
-    visible: true
-    variables:
-      - admin_username
-      - admin_password
-
   - title: Shapes
     visible: true
     variables:
@@ -45,16 +39,18 @@ variableGroups:
     visible: true
     variables:
       - database_deployment
+      - admin_username
+      - admin_password
 
   - title: MySQL HeatWave DBSystem
     visible:
       or:
         - eq:
           - database_deployment
-          - HEATWAVE
+          - HeatWave
         - eq:
           - database_deployment
-          - BOTH
+          - Both
     variables:
       - useCredits
       - mysql_shape
@@ -64,10 +60,10 @@ variableGroups:
       or:
         - eq:
           - database_deployment
-          - AUTONOMOUS
+          - Autonomous DB
         - eq:
           - database_deployment
-          - BOTH
+          - Both
     variables:
       - autonomous_database_name
       - autonomous_database_display_name
@@ -110,10 +106,10 @@ variables:
     title: Databases to Deploy
     description: Choose whether to deploy MySQL HeatWave, Autonomous Database, or both.
     enum:
-      - HEATWAVE
-      - AUTONOMOUS
-      - BOTH
-    default: BOTH
+      - HeatWave
+      - Autonomous DB
+      - Both
+    default: Both
 
   useExistingInfra:
     title: Use Existing Infrastructure Resources
@@ -128,10 +124,10 @@ variables:
         - or:
           - eq:
             - database_deployment
-            - HEATWAVE
+            - HeatWave
           - eq:
             - database_deployment
-            - BOTH
+            - Both
     title: MySQL HeatWave Shape
     default: "MySQL.8"
 
@@ -159,9 +155,9 @@ variables:
 
   autonomous_database_admin_password:
     type: password
-    required: false
+    required: true
     title: Autonomous Database ADMIN Password
-    description: Leave empty to use the MySQL HeatWave admin password.
+    description: Password for the Autonomous Database ADMIN user.
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
   node_shape:
@@ -332,10 +328,10 @@ variables:
       or:
         - eq:
           - database_deployment
-          - HEATWAVE
+          - HeatWave
         - eq:
           - database_deployment
-          - BOTH
+          - Both
     default: "admin"
     title: MySQL HeatWave Admin User's Name
     description: Name for HeatWave MySQL Database Service's admin user
@@ -344,8 +340,16 @@ variables:
   admin_password:
     type: password
     required: true
-    title: Database Admin Password
-    description: Password for the HeatWave MySQL admin user and, by default, the Autonomous Database ADMIN user
+    visible:
+      or:
+        - eq:
+          - database_deployment
+          - HeatWave
+        - eq:
+          - database_deployment
+          - Both
+    title: MySQL HeatWave Admin Password
+    description: Password for the HeatWave MySQL admin user
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
 

@@ -50,7 +50,7 @@ You will then be redirected to the OCI Resource Manager Stack console:
 
 ![Resource Manager](https://github.com/user-attachments/assets/95cc9fb6-f325-454d-bce8-0a24d22c45d8)
 
-Follow the wizard and choose HeatWave, Autonomous Database, or both. Select an admin account and password, then choose the shape for the compute and MySQL DBSystem when HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy; it uses the smallest standard paid serverless configuration (2 ECPUs), and its ADMIN password defaults to the MySQL password unless you set a different one.
+Follow the wizard and choose HeatWave, Autonomous DB, or Both. HeatWave credentials appear only when HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy and an ADMIN password; it uses the smallest standard paid serverless configuration (2 ECPUs).
 
 For the compute instance, the default is to use the `VM.Standard.A2.Flex` shape:
 

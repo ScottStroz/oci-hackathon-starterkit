@@ -116,13 +116,13 @@ variable "useCredits" {
 }
 
 variable "database_deployment" {
-  description = "Databases to deploy: HEATWAVE, AUTONOMOUS, or BOTH."
+  description = "Databases to deploy: HeatWave, Autonomous DB, or Both."
   type        = string
-  default     = "BOTH"
+  default     = "Both"
 
   validation {
-    condition     = contains(["HEATWAVE", "AUTONOMOUS", "BOTH"], var.database_deployment)
-    error_message = "database_deployment must be HEATWAVE, AUTONOMOUS, or BOTH."
+    condition     = contains(["HeatWave", "Autonomous DB", "Both"], var.database_deployment)
+    error_message = "database_deployment must be HeatWave, Autonomous DB, or Both."
   }
 }
 
