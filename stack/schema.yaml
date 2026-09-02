@@ -79,6 +79,7 @@ variableGroups:
       - autonomous_database_name
       - autonomous_database_display_name
       - autonomous_database_compute_count
+      - autonomous_database_storage_size_in_gb
       - autonomous_database_admin_password
 
   - title: Use Existing Infrastructure
@@ -163,6 +164,14 @@ variables:
     default: 2
     title: Autonomous Database ECPUs
     description: The smallest standard paid Autonomous Database serverless configuration uses 2 ECPUs.
+
+  autonomous_database_storage_size_in_gb:
+    type: number
+    required: true
+    minimum: 20
+    default: 20
+    title: Autonomous Database Storage (GB)
+    description: Storage for the paid Autonomous Database. The minimum is 20 GB.
 
   autonomous_database_admin_password:
     type: password

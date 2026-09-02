@@ -169,6 +169,17 @@ variable "autonomous_database_compute_count" {
   }
 }
 
+variable "autonomous_database_storage_size_in_gb" {
+  description = "Storage in GB for the paid Autonomous Database."
+  type        = number
+  default     = 20
+
+  validation {
+    condition     = var.autonomous_database_storage_size_in_gb >= 20
+    error_message = "autonomous_database_storage_size_in_gb must be at least 20 GB."
+  }
+}
+
 variable "autonomous_database_admin_password" {
   description = "Optional password for the Autonomous Database ADMIN user. Defaults to admin_password when empty."
   type        = string

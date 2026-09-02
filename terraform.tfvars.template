@@ -21,6 +21,7 @@ database_deployment = "Both"
 # Used when database_deployment is Autonomous DB or Both. The name must be unique in the tenancy.
 autonomous_database_name = "HACKATHONADB"
 autonomous_database_compute_count = 2
+autonomous_database_storage_size_in_gb = 20
 #autonomous_database_admin_password = "UseADifferentPassw0rd!"
 
 node_shape = "VM.Standard.A1.Flex"

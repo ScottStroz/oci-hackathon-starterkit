@@ -1,7 +1,7 @@
 
 locals {
     db_system_id = var.existing_mds_instance_id ==  "" ? oci_mysql_mysql_db_system.MDSinstance[0].id : var.existing_mds_instance_id
-    cluster_shape = var.mysql_shape == "MySQL.Free" ? "HeatWave.Free" : "MySQL.HeatWave.VM.Standard"
+    cluster_shape = var.mysql_shape == "MySQL.Free" ? "HeatWave.Free" : "HeatWave.32GB"
 }
 
 resource "oci_mysql_mysql_db_system" "MDSinstance" {

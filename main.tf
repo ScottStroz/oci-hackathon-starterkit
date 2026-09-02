@@ -276,6 +276,7 @@ resource "oci_database_autonomous_database" "autonomous_database" {
   db_workload                 = "OLTP"
   compute_model               = "ECPU"
   compute_count               = var.autonomous_database_compute_count
+  data_storage_size_in_gb     = var.autonomous_database_storage_size_in_gb
   is_free_tier                = false
   is_mtls_connection_required = true
 }
