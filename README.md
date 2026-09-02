@@ -2,7 +2,7 @@
 
 Deploy on OCI to start developing an application.
 
-The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) , a compute instance as application server and an HeatWave MySQL Instance with HeatWave Cluster, Lakehouse and MySQL REST Service (MRS).
+The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) and a compute instance as application server. You can choose to deploy a HeatWave MySQL Instance with HeatWave Cluster, Lakehouse and MySQL REST Service (MRS), a paid Autonomous Database, or both.
 
 This initial infrastructure is an excellent starting point for a hackathon project.
 
@@ -10,7 +10,7 @@ The same modules are used as Resource Manager Stack.
 
 The latest stack ZIP is available from the [v1.4.1 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.4.1).
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ScottStroz/oci-hackathon-starterkit/releases/download/v1.4.1/oci-hackathon-starterkit-stack.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ScottStroz/oci-hackathon-starterkit/releases/download/v1.5/oci-hackathon-starterkit-stack.zip)
 
 Please check the [Wiki](https://github.com/lefred/oci-hackathon-starterkit/wiki) to learn how to use the Hackathon StarterKit.
 
@@ -50,7 +50,7 @@ You will then be redirected to the OCI Resource Manager Stack console:
 
 ![Resource Manager](https://github.com/user-attachments/assets/95cc9fb6-f325-454d-bce8-0a24d22c45d8)
 
-Follow the wizard, choose an admin account and password, then you can also choose the shape for the compute and the MySQL DBSystem.
+Follow the wizard and choose HeatWave, Autonomous Database, or both. Select an admin account and password, then choose the shape for the compute and MySQL DBSystem when HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy; it uses the smallest standard paid serverless configuration (2 ECPUs), and its ADMIN password defaults to the MySQL password unless you set a different one.
 
 For the compute instance, the default is to use the `VM.Standard.A2.Flex` shape:
 

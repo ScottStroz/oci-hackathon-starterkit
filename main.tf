@@ -17,6 +17,12 @@ locals {
     var.mysql_shape != null ? var.mysql_shape :
     var.useCredits ? "MySQL.Free" : "MySQL.8"
   )
+  effective_autonomous_database_admin_password = (
+    var.autonomous_database_admin_password != "" ?
+    var.autonomous_database_admin_password : var.admin_password
+  )
+  deploy_heatwave            = contains(["HEATWAVE", "BOTH"], var.database_deployment)
+  deploy_autonomous_database = contains(["AUTONOMOUS", "BOTH"], var.database_deployment)
 }
 
 
@@ -32,12 +38,6 @@ data "oci_core_images" "images_for_shape" {
 data "oci_identity_availability_domains" "ad" {
   compartment_id = var.tenancy_ocid
 }
-
-data "template_file" "ad_names" {
-  count    = length(data.oci_identity_availability_domains.ad.availability_domains)
-  template = lookup(data.oci_identity_availability_domains.ad.availability_domains[count.index], "name")
-}
-
 
 resource "oci_core_virtual_network" "starter_vcn" {
   cidr_block     = var.vcn_cidr
@@ -232,7 +232,7 @@ resource "oci_core_subnet" "private" {
 
 module "webserver" {
   source               = "./modules/webserver"
-  availability_domains = data.template_file.ad_names.*.rendered
+  availability_domains = data.oci_identity_availability_domains.ad.availability_domains[*].name
   compartment_ocid     = var.compartment_ocid
   image_id             = var.node_image_id == "" ? data.oci_core_images.images_for_shape.images[0].id : var.node_image_id
   shape                = var.node_shape
@@ -248,18 +248,34 @@ module "webserver" {
 data "oci_mysql_mysql_configurations" "shape" {
   compartment_id = var.compartment_ocid
   type           = ["DEFAULT"]
-  shape_name     = local.effective_mysql_shape 
+  shape_name     = local.effective_mysql_shape
+
+  count = local.deploy_heatwave ? 1 : 0
 }
 
 
 module "heatwave" {
+  count                    = local.deploy_heatwave ? 1 : 0
   source                   = "./modules/heatwave"
   admin_password           = var.admin_password
   admin_username           = var.admin_username
-  availability_domain      = data.template_file.ad_names.*.rendered[0]
-  configuration_id         = data.oci_mysql_mysql_configurations.shape.configurations[0].id
+  availability_domain      = data.oci_identity_availability_domains.ad.availability_domains[0].name
+  configuration_id         = data.oci_mysql_mysql_configurations.shape[0].configurations[0].id
   compartment_ocid         = var.compartment_ocid
   subnet_id                = local.private_subnet_id
   existing_mds_instance_id = var.existing_mds_instance_ocid
   mysql_shape              = local.effective_mysql_shape
+}
+
+resource "oci_database_autonomous_database" "autonomous_database" {
+  count                       = local.deploy_autonomous_database ? 1 : 0
+  compartment_id              = var.compartment_ocid
+  admin_password              = local.effective_autonomous_database_admin_password
+  db_name                     = var.autonomous_database_name
+  display_name                = var.autonomous_database_display_name
+  db_workload                 = "OLTP"
+  compute_model               = "ECPU"
+  compute_count               = var.autonomous_database_compute_count
+  is_free_tier                = false
+  is_mtls_connection_required = true
 }

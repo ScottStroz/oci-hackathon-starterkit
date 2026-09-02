@@ -1,5 +1,5 @@
 title: "Hackathon Starter Kit on OCI"
-description: "Hackathon Starter Kit on OCI using Compute and MySQL HeatWave instances"
+description: "Hackathon Starter Kit on OCI using Compute, MySQL HeatWave, and Autonomous Database instances"
 schemaVersion: 1.3.0
 version: "2025112601"
 locale: "en"
@@ -41,11 +41,38 @@ variableGroups:
       - vcn
       - vcn_cidr
 
-  - title: MySQL HeatWave DBSystem
+  - title: Database Selection
     visible: true
+    variables:
+      - database_deployment
+
+  - title: MySQL HeatWave DBSystem
+    visible:
+      or:
+        - eq:
+          - database_deployment
+          - HEATWAVE
+        - eq:
+          - database_deployment
+          - BOTH
     variables:
       - useCredits
       - mysql_shape
+
+  - title: Autonomous Database
+    visible:
+      or:
+        - eq:
+          - database_deployment
+          - AUTONOMOUS
+        - eq:
+          - database_deployment
+          - BOTH
+    variables:
+      - autonomous_database_name
+      - autonomous_database_display_name
+      - autonomous_database_compute_count
+      - autonomous_database_admin_password
 
   - title: Use Existing Infrastructure
     visible: true
@@ -77,6 +104,17 @@ variables:
     type: boolean
     default: false
 
+  database_deployment:
+    type: enum
+    required: true
+    title: Databases to Deploy
+    description: Choose whether to deploy MySQL HeatWave, Autonomous Database, or both.
+    enum:
+      - HEATWAVE
+      - AUTONOMOUS
+      - BOTH
+    default: BOTH
+
   useExistingInfra:
     title: Use Existing Infrastructure Resources
     type: boolean
@@ -84,9 +122,47 @@ variables:
 
   mysql_shape:
     type: string
-    visible: ${useCredits}
+    visible:
+      and:
+        - ${useCredits}
+        - or:
+          - eq:
+            - database_deployment
+            - HEATWAVE
+          - eq:
+            - database_deployment
+            - BOTH
     title: MySQL HeatWave Shape
     default: "MySQL.8"
+
+  autonomous_database_name:
+    type: string
+    required: true
+    default: "HACKATHONADB"
+    title: Autonomous Database Name
+    description: Unique database name for the Autonomous Database. It must start with a letter and contain only letters and numbers.
+    pattern: "^[A-Za-z][A-Za-z0-9]{0,29}$"
+
+  autonomous_database_display_name:
+    type: string
+    required: false
+    default: "Hackathon Autonomous Database"
+    title: Autonomous Database Display Name
+
+  autonomous_database_compute_count:
+    type: number
+    required: true
+    minimum: 2
+    default: 2
+    title: Autonomous Database ECPUs
+    description: The smallest standard paid Autonomous Database serverless configuration uses 2 ECPUs.
+
+  autonomous_database_admin_password:
+    type: password
+    required: false
+    title: Autonomous Database ADMIN Password
+    description: Leave empty to use the MySQL HeatWave admin password.
+    pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
   node_shape:
     type: oci:core:instanceshape:name
@@ -252,6 +328,14 @@ variables:
   admin_username:
     type: string
     required: false
+    visible:
+      or:
+        - eq:
+          - database_deployment
+          - HEATWAVE
+        - eq:
+          - database_deployment
+          - BOTH
     default: "admin"
     title: MySQL HeatWave Admin User's Name
     description: Name for HeatWave MySQL Database Service's admin user
@@ -260,8 +344,8 @@ variables:
   admin_password:
     type: password
     required: true
-    title: MySQL HeatWave Admin User's Password
-    description: Password for HeatWave MySQL Database Service's admin user
+    title: Database Admin Password
+    description: Password for the HeatWave MySQL admin user and, by default, the Autonomous Database ADMIN user
     pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\\\"\\\\|,.<>\\/?]).{8,32}$"
 
 
@@ -272,6 +356,10 @@ outputGroups:
 - title: "MySQL HeatWave Private IP"
   outputs:
     - mysql_heatwave_private_ip
+- title: "Autonomous Database"
+  outputs:
+    - autonomous_database_id
+    - autonomous_database_service_console_url
 - title: "SSH Private Key"
   outputs:
     - ssh_private_key
@@ -282,6 +370,10 @@ outputs:
   mysql_heatwave_private_ip:
     title: "MySQL HeatWave Private IP"
     description: "Private IP of the MySQL HeatWave Cluster"
+  autonomous_database_id:
+    title: "Autonomous Database OCID"
+  autonomous_database_service_console_url:
+    title: "Autonomous Database Service Console URL"
   ssh_private_key:
     title: "Generated SSH private key"
     sensitive: true

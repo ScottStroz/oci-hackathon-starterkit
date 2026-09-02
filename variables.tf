@@ -115,6 +115,17 @@ variable "useCredits" {
   default = false
 }
 
+variable "database_deployment" {
+  description = "Databases to deploy: HEATWAVE, AUTONOMOUS, or BOTH."
+  type        = string
+  default     = "BOTH"
+
+  validation {
+    condition     = contains(["HEATWAVE", "AUTONOMOUS", "BOTH"], var.database_deployment)
+    error_message = "database_deployment must be HEATWAVE, AUTONOMOUS, or BOTH."
+  }
+}
+
 variable "mysql_shape" {
   description = "MySQL HeatWave DBSystem shape to use. "
   default     = "MySQL.8"
@@ -128,6 +139,41 @@ variable "label_prefix" {
 variable "admin_password" {
   description = "Password for the root user for MySQL Database Service"
   default     = "MyPassw0rd!"
+}
+
+variable "autonomous_database_name" {
+  description = "Unique database name for the Autonomous Database (letters and numbers only, starting with a letter)."
+  type        = string
+  default     = "HACKATHONADB"
+
+  validation {
+    condition     = can(regex("^[A-Za-z][A-Za-z0-9]{0,29}$", var.autonomous_database_name))
+    error_message = "autonomous_database_name must start with a letter and contain at most 30 letters and numbers."
+  }
+}
+
+variable "autonomous_database_display_name" {
+  description = "Display name for the Autonomous Database."
+  type        = string
+  default     = "Hackathon Autonomous Database"
+}
+
+variable "autonomous_database_compute_count" {
+  description = "Number of ECPUs for the paid Autonomous Database. The smallest standard serverless configuration uses 2 ECPUs."
+  type        = number
+  default     = 2
+
+  validation {
+    condition     = var.autonomous_database_compute_count >= 2
+    error_message = "autonomous_database_compute_count must be at least 2 ECPUs."
+  }
+}
+
+variable "autonomous_database_admin_password" {
+  description = "Optional password for the Autonomous Database ADMIN user. Defaults to admin_password when empty."
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
 variable "ssh_authorized_keys_path" {
@@ -154,4 +200,3 @@ variable "admin_username" {
   description = "Username of the HeatWave MySQL admin account"
   default     = "admin"
 }
-

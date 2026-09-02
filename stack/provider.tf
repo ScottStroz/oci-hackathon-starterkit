@@ -26,4 +26,3 @@ provider "oci" {
   private_key_path = var.private_key_path
   alias = "home"
 }
-

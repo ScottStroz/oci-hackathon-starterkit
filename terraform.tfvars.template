@@ -15,6 +15,14 @@ ssh_private_key_path = "<REPLACE_ME>"
 
 admin_password = "MyPassw0rd!"
 
+# Choose HEATWAVE, AUTONOMOUS, or BOTH.
+database_deployment = "BOTH"
+
+# Used when database_deployment is AUTONOMOUS or BOTH. The name must be unique in the tenancy.
+autonomous_database_name = "HACKATHONADB"
+autonomous_database_compute_count = 2
+#autonomous_database_admin_password = "UseADifferentPassw0rd!"
+
 node_shape = "VM.Standard.A1.Flex"
 
 #existing_vcn_ocid = ""
@@ -23,4 +31,3 @@ node_shape = "VM.Standard.A1.Flex"
 #existing_public_security_list_ocid = ""
 #existing_private_security_list_ocid = ""
 #existing_public_subnet_ocid = ""
-
