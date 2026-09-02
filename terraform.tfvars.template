@@ -18,6 +18,9 @@ admin_password = "MyPassw0rd!"
 # Choose MySQL HeatWave, Autonomous DB, or Both.
 database_deployment = "Both"
 
+# Used when database_deployment is MySQL HeatWave or Both.
+mysql_heatwave_display_name = "Hackathon MySQL HeatWave"
+
 # Used when database_deployment is Autonomous DB or Both. The name must be unique in the tenancy.
 autonomous_database_name = "HACKATHONADB"
 autonomous_database_compute_count = 2

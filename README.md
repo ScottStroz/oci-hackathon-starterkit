@@ -8,7 +8,7 @@ This initial infrastructure is an excellent starting point for a hackathon proje
 
 The same modules are used as Resource Manager Stack.
 
-The latest stack ZIP is available from the [v1.4.1 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.4.1).
+The latest stack ZIP is available from the [v1.5 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.5).
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ScottStroz/oci-hackathon-starterkit/releases/download/v1.5/oci-hackathon-starterkit-stack.zip)
 

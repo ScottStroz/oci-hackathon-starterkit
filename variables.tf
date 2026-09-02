@@ -131,6 +131,12 @@ variable "mysql_shape" {
   default     = "MySQL.8"
 }
 
+variable "mysql_heatwave_display_name" {
+  description = "Display name for the MySQL HeatWave DB System."
+  type        = string
+  default     = "Hackathon MySQL HeatWave"
+}
+
 variable "label_prefix" {
   description = "To create unique identifier for multiple setup in a compartment."
   default     = ""

@@ -265,6 +265,7 @@ module "heatwave" {
   subnet_id                = local.private_subnet_id
   existing_mds_instance_id = var.existing_mds_instance_ocid
   mysql_shape              = local.effective_mysql_shape
+  display_name             = var.mysql_heatwave_display_name
 }
 
 resource "oci_database_autonomous_database" "autonomous_database" {
