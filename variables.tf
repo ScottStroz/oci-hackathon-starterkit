@@ -97,17 +97,17 @@ variable "node_image_id" {
 
 variable "node_shape" {
   description = "Instance shape to use as Webserver. "
-  default     = "VM.Standard.A1.Flex"
+  default     = "VM.Standard.E5.Flex"
 }
 
 variable "node_flex_shape_ocpus" {
   description = "Flex Instance shape OCPUs"
-  default     = 4
+  default     = 1
 }
 
 variable "node_flex_shape_memory" {
   description = "Flex Instance shape Memory (GB)"
-  default     = 24
+  default     = 4
 }
 
 variable "useCredits" {

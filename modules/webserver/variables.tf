@@ -19,17 +19,17 @@ variable "subnet_id" {
 
 variable "shape" {
   description = "Instance shape to use for master instance. "
-  default     = "VM.Standard.A2.Flex"
+  default     = "VM.Standard.E5.Flex"
 }
 
 variable "flex_shape_ocpus" {
   description = "Flex Instance shape OCPUs"
-  default = 2
+  default     = 1
 }
 
 variable "flex_shape_memory" {
   description = "Flex Instance shape Memory (GB)"
-  default = 12
+  default     = 4
 }
 
 variable "label_prefix" {

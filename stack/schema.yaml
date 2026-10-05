@@ -200,7 +200,7 @@ variables:
     minimum: 1
     maximum: 24
     multipleOf: 1
-    default: 24
+    default: 4
     title: "Flex Shape Memory (GB)"
     description: "Choose number GB for Flex Shape Memory."
     visible:
@@ -234,7 +234,7 @@ variables:
     minimum: 1
     maximum: 4
     multipleOf: 1
-    default: 4
+    default: 1
     title: "Flex Shape OCPUs"
     description: "Choose number of OCPUs for Flex Shape."
     visible:

@@ -52,11 +52,11 @@ You will then be redirected to the OCI Resource Manager Stack console:
 
 Follow the wizard and choose MySQL HeatWave, Autonomous DB, or Both. MySQL HeatWave credentials appear only when MySQL HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy and an ADMIN password; it uses the smallest standard paid serverless configuration (2 ECPUs and 20 GB storage).
 
-For the compute instance, the default is to use the `VM.Standard.A2.Flex` shape:
+For the compute instance, the default is `VM.Standard.E5.Flex` with 1 OCPU and 4 GB of memory. This is a paid AMD shape that can use trial or promotional credits; it is not an Always Free shape.
 
 ![Compute Shape](https://github.com/user-attachments/assets/ab2ba5d9-9d48-48f0-ad13-762becfcac9b)
 
-However, you can choose another shape such as `VM.Standard.E2.1.Micro` if needed.
+You can choose another supported shape and adjust the OCPU and memory settings if needed. OCI chooses the fault domain automatically. If deployment reports an out-of-host-capacity error, try another shape or retry later; E5 capacity is not guaranteed.
 
 By default, the Stack also deploys the always-free Trier MySQL HeatWave. But you can also use your credits to deploy a more powerful instance:
 
