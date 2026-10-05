@@ -86,19 +86,7 @@ You can follow the entire deployment process on this video:
 
 To connect to the deployed compute instance, you need to save the private SSH key that was created during the deployment.
 
-This key is hidden and can be found in the "**Job resources**" of the Resource Manager's Stack details of the apply job:
-
-![Job Resources 1](https://github.com/user-attachments/assets/c5b89686-e908-4f90-a91a-304df4fcc878)
-
-![Job Resources 2](https://github.com/user-attachments/assets/517ddb90-b0d7-41af-801c-e0945e43b7aa)
-
-![Job Resources 3](https://github.com/user-attachments/assets/b211e545-1220-4b91-8e67-f387536cdeb2)
-
-Copy the key and paste it into a file on your disk. You need to fix the key by removing the enclosing double quotes and replacing all the '\n' with a real carriage return, using, for example, the command `:1,$s/\\n/\r/g` on Vi:
-
-![Fix SSH Key](https://github.com/user-attachments/assets/18a110b1-ea11-4074-ab64-b1efec63e3ba)
-
-Then you can change the file permissions to 600.
+Copy the SSH private key from job --> application information --> SSH key
 
 You can then connect to the compute instance using the key, the **opc** user and the public IP:
 
