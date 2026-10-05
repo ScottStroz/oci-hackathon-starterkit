@@ -86,29 +86,32 @@ You can follow the entire deployment process on this video:
 
 To connect to the deployed compute instance, you need to save the private SSH key that was created during the deployment.
 
-Copy the SSH private key from job --> application information --> SSH key
+Copy the SSH private key from Resource Manager -> Stacks -> Application Information -> Generated SSH private key
+
+<img width="1154" height="463" alt="image" src="https://github.com/user-attachments/assets/597dbf22-5619-45e7-b7d0-c3bfec142315" />
+
+
+Copy the content of the key and paste it into a file.
+
+Save the key file as key.pem or any other name
+
+<img width="753" height="635" alt="image" src="https://github.com/user-attachments/assets/69bd9d1c-a2a6-4bc9-9c8a-c6666c53dc88" />
+
+
+Change the permissions for the file
+
+**chmod 600 key.pem**
+
+Copy public IP Address for your VM from the screen above.
 
 You can then connect to the compute instance using the key, the **opc** user and the public IP:
+**ssh -i key.pem opc@EnterYourpublicIPAddress**
+
 
 ![SSH Connection](https://github.com/user-attachments/assets/c0c62270-ac55-42ec-adb3-27bb89002e7e)
 
 You are now connected to the compute instance.
 
-#### Update
-
-Recently, when deploying a stack, there is a new tab with information on how to connect to the deployed compute instance:
-
-![New Connection Tab 1](https://github.com/user-attachments/assets/7967304c-4ec6-4aad-97a8-b2189b0b273c)
-
-![New Connection Tab 2](https://github.com/user-attachments/assets/d1b05ae4-c059-4628-aa83-6e6b7930a348)
-
-You can select the content of the key and paste it into a file as previously, and we need to replace the blank spaces like this:
-
-![Replace Spaces](https://github.com/user-attachments/assets/bbb95ccc-49e2-4d99-a9b2-9c36f4d5b249)
-
-In Vim, I use the command:
-
-`:s/\v^(\S+ ){3}\zs.*\ze( \S+){3}$/\=substitute(submatch(0), ' ', "\r", 'g')/`
 
 You can also check this video:
 
