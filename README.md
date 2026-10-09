@@ -219,6 +219,7 @@ OCI Generative AI lets you call models from your application using SDKs and gene
 2. Select a model available in your region.
 3. Choose an example prompt or enter your own.
 4. Copy the sample code for your preferred language.
+5. Please note that currently only **cohere, meta, and openAI GPT OSS models** are supported in the free trial. Grok and Gemini models are NOT supported.
 
 ![GenAI 01](https://github.com/user-attachments/assets/e6e51e37-c17b-450b-8c2d-a0ff254b4917)
 
