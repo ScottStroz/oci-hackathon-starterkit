@@ -1,511 +1,510 @@
-# oci-hackathon-starterkit
+# OCI Hackathon Starter Kit
 
-Deploy on OCI to start developing an application.
+Get your hackathon project running on Oracle Cloud Infrastructure (OCI). The starter kit deploys the networking, compute, and optional databases you need to start building an application.
 
-The deployment contains all required network resources (VCN, Subnets, Security Lists, NAT Gateway, Internet Gateway, ...) and a compute instance as application server. You can choose to deploy a MySQL HeatWave instance with MySQL HeatWave Cluster, Lakehouse and MySQL REST Service (MRS), a paid Autonomous Database, or both.
+## What the starter kit deploys
 
-This initial infrastructure is an excellent starting point for a hackathon project.
+- **Networking:** A virtual cloud network (VCN), subnets, security lists, a NAT gateway, and an internet gateway.
+- **Application server:** A compute instance with Java, Node.js, Python, and MySQL Shell installed.
+- **Database options:** MySQL HeatWave, Autonomous Database, or both. The MySQL option includes HeatWave capabilities and MySQL REST Service (MRS).
 
-The same modules are used as Resource Manager Stack.
+You can deploy the infrastructure through OCI Resource Manager using the same modules provided in this repository.
 
-The latest stack ZIP is available from the [v1.6 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.6).
+This guide uses the stack ZIP from the [v1.6 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.6).
 
 [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/ScottStroz/oci-hackathon-starterkit/releases/download/v1.6/oci-hackathon-starterkit-stack.zip)
 
-Please check the [Wiki](https://github.com/lefred/oci-hackathon-starterkit/wiki) to learn how to use the Hackathon StarterKit.
+For more background, see the [Starter Kit wiki](https://github.com/lefred/oci-hackathon-starterkit/wiki).
 
-## Getting Started
+## Follow the guide
 
-### 1. Create your OCI Account
+Complete steps 1–3 to deploy your environment and connect to the application server. Then choose the sections that fit your project. Steps 5, 7, and 8 require MySQL HeatWave.
 
-Please go to [http://signup.cloud.oracle.com/](http://signup.cloud.oracle.com/)
+1. [Create your OCI account](#1-create-your-oci-account)
+2. [Deploy the starter kit](#2-deploy-the-starter-kit)
+3. [Connect to the compute instance](#3-connect-to-the-compute-instance)
+4. [Choose your application language](#4-choose-your-application-language)
+5. [Connect to MySQL HeatWave](#5-connect-to-mysql-heatwave)
+6. [Use OCI Generative AI](#6-use-oci-generative-ai)
+7. [Use MySQL HeatWave GenAI](#7-use-mysql-heatwave-genai)
+8. [Use MySQL REST Service](#8-use-mysql-rest-service)
 
-If you have sent your email to get the free credits promotion, please use the same address to sign up.
+Screenshots and sample version numbers illustrate the environment used to prepare this guide. Your console screens and installed versions may differ.
 
-You will get a similar screen after entering your email:
+## 1. Create your OCI account
+
+If you already have an OCI account, sign in and continue to step 2.
+
+1. Open the [OCI sign-up page](https://signup.cloud.oracle.com/).
+2. Enter your email address. If you registered for hackathon promotional credits, use the same address.
+3. Follow the sign-up wizard and select **Individual** as your customer type.
+4. Provide a supported payment method to verify your identity and activate the trial.
+
+Oracle may place a temporary authorization hold on your card for verification. See the [Oracle Cloud Free Tier FAQ](https://www.oracle.com/cloud/free/faq/) for payment and trial details.
 
 ![OCI Signup](https://github.com/user-attachments/assets/ba9d41f1-5927-464f-b9f4-40b5174a8687)
 
-Then follow the wizard and choose your customer type as an individual:
-
 ![Customer Type](https://github.com/user-attachments/assets/c025e344-3bd7-4382-a4d5-ebe237a4a75d)
-
-You require a payment method (credit card) to enable your free trial, and you won't be charged, unless you upgrade your account:
 
 ![Payment Method 1](https://github.com/user-attachments/assets/10be290f-aa3a-42d3-9a48-d496be6f799f)
 
 ![Payment Method 2](https://github.com/user-attachments/assets/7eed2f8a-cd7d-4b18-9163-068b3d26ecd7)
 
-When created and logged, you will see the OCI Console. Mind the message about using the Free Trial:
+Once your account is ready, sign in to the OCI Console and check your trial status.
 
 ![OCI Console](https://github.com/user-attachments/assets/9ee3cbf7-e197-4486-a298-b1085e61d767)
 
-### 2. Deploy the starterkit on OCI
+## 2. Deploy the starter kit
 
-To deploy the Hackathon Starter Kit on OCI, you need to be connected to the OCI console and click on the button on the GitHub Repo page.
+With the OCI Console open, select **Deploy to Oracle Cloud** above or on the repository page. This opens the stack creation wizard in OCI Resource Manager.
 
 ![Deployment Button](https://github.com/user-attachments/assets/3c7896e9-eb8c-4040-98c9-f4938ac9991a)
 
-You will then be redirected to the OCI Resource Manager Stack console:
-
 ![Resource Manager](https://github.com/user-attachments/assets/95cc9fb6-f325-454d-bce8-0a24d22c45d8)
 
-Follow the wizard and choose MySQL HeatWave, Autonomous DB, or Both. MySQL HeatWave credentials appear only when MySQL HeatWave is selected. When Autonomous Database is selected, provide a database name that is unique in your tenancy and an ADMIN password; it uses the smallest standard paid serverless configuration (2 ECPUs and 20 GB storage).
+### Choose your database
 
-For the compute instance, the default is `VM.Standard.E5.Flex` with 1 OCPU and 4 GB of memory. This is a paid AMD shape that can use trial or promotional credits; it is not an Always Free shape.
+Select **MySQL HeatWave**, **Autonomous Database**, or **Both**.
 
-![Compute Shape](https://github.com/user-attachments/assets/ab2ba5d9-9d48-48f0-ad13-762becfcac9b)
+| Option | What to configure |
+| --- | --- |
+| MySQL HeatWave | Enter your MySQL credentials and choose the database shape. The credential fields appear when you select this option. |
+| Autonomous Database | Enter a database name that is unique in your tenancy and an ADMIN password. This stack uses a paid serverless configuration with 2 ECPUs and 20 GB of storage. |
+| Both | Configure each database as described above. |
 
-You can choose another supported shape and adjust the OCPU and memory settings if needed. OCI chooses the fault domain automatically. If deployment reports an out-of-host-capacity error, try another shape or retry later; E5 capacity is not guaranteed.
-
-By default, the Stack also deploys the always-free Trier MySQL HeatWave. But you can also use your credits to deploy a more powerful instance:
+When MySQL HeatWave is selected, the stack defaults to the Always Free tier described in the original guide. You can choose a larger instance using trial or promotional credits. Review the selected configuration in the wizard before deploying.
 
 ![MySQL Shape](https://github.com/user-attachments/assets/c7893ce1-dab3-420b-89df-de78d7daae93)
 
-When ready, make sure you check the apply box and click on "Create":
+### Configure the application server
+
+The compute instance defaults to:
+
+- **Shape:** `VM.Standard.E5.Flex`
+- **OCPUs:** 1
+- **Memory:** 4 GB
+
+This is a paid AMD shape that can use trial or promotional credits. You can select another supported shape and adjust its OCPU and memory settings. OCI selects the fault domain automatically.
+
+![Compute Shape](https://github.com/user-attachments/assets/ab2ba5d9-9d48-48f0-ad13-762becfcac9b)
+
+### Create and apply the stack
+
+1. Review your settings.
+2. Select the option to **apply** the configuration.
+3. Select **Create** to start deploying the resources.
 
 ![Apply Configuration](https://github.com/user-attachments/assets/2e0d18ea-3bb2-4a65-9ea1-ecfb8f5ea463)
 
-All the resources will start to be automatically deployed in OCI:
+The deployment takes several minutes. Follow the job progress in Resource Manager and wait for the job to succeed.
 
 ![Deployment Progress](https://github.com/user-attachments/assets/10a0c331-4fa8-4dad-90c3-e590cfda6d52)
 
-This process takes some time; once finished, it should be green. If the job fails, it is likely related to the lack of capacity of the selected shapes:
-
 ![Deployment Complete](https://github.com/user-attachments/assets/ca1589ed-c422-46fa-b232-9eb0c5708cc5)
 
-The job prints the output at the end of the logs:
+If the job fails, check its logs for the cause. For an **out-of-host-capacity** error, try another supported shape or retry later. E5 capacity is not guaranteed.
+
+When deployment finishes, review the outputs at the end of the job logs. You'll use the connection details in the next steps.
 
 ![Deployment Output](https://github.com/user-attachments/assets/479e3840-7ccb-4369-8026-0bd50c063e01)
 
-You can follow the entire deployment process on this video:
+[Watch the deployment walkthrough](https://github.com/user-attachments/assets/3cda5c48-1189-4dc4-9036-b17ba17da71c)
 
-[Watch the deployment video](https://github.com/user-attachments/assets/3cda5c48-1189-4dc4-9036-b17ba17da71c)
+## 3. Connect to the compute instance
 
-### 3. Connect to the compute instance
+You'll need the generated SSH private key and the compute instance's public IP address.
 
-To connect to the deployed compute instance, you need to save the private SSH key that was created during the deployment.
+### Save the SSH key
 
-Copy the SSH private key from Resource Manager -> Stacks -> Application Information -> Generated SSH private key
+1. In the OCI Console, open **Resource Manager → Stacks** and select your stack.
+2. Open **Application Information → Generated SSH private key**.
+3. Copy the entire key into a local file named `key.pem`.
+4. Copy the compute instance's public IP address from the same screen.
 
-<img width="1154" height="463" alt="image" src="https://github.com/user-attachments/assets/597dbf22-5619-45e7-b7d0-c3bfec142315" />
+![Generated SSH private key and compute connection details](https://github.com/user-attachments/assets/597dbf22-5619-45e7-b7d0-c3bfec142315)
 
+![SSH private key saved to a local file](https://github.com/user-attachments/assets/69bd9d1c-a2a6-4bc9-9c8a-c6666c53dc88)
 
-Copy the content of the key and paste it into a file.
+### Open an SSH connection
 
-Save the key file as key.pem or any other name
+On macOS or Linux, restrict access to the key file:
 
-<img width="753" height="635" alt="image" src="https://github.com/user-attachments/assets/69bd9d1c-a2a6-4bc9-9c8a-c6666c53dc88" />
+```shell
+chmod 600 key.pem
+```
 
+Then connect as the `opc` user. Replace `<compute-public-ip>` with your instance's public IP address:
 
-Change the permissions for the file
-
-**chmod 600 key.pem**
-
-Copy public IP Address for your VM from the screen above.
-
-You can then connect to the compute instance using the key, the **opc** user and the public IP:
-**ssh -i key.pem opc@EnterYourpublicIPAddress**
-
+```shell
+ssh -i key.pem opc@<compute-public-ip>
+```
 
 ![SSH Connection](https://github.com/user-attachments/assets/c0c62270-ac55-42ec-adb3-27bb89002e7e)
 
-You are now connected to the compute instance.
+You're now connected to the application server. Unless a step says otherwise, run the remaining shell commands on this instance.
 
+[Watch the SSH connection walkthrough](https://github.com/user-attachments/assets/75f96eed-cb99-4b56-b27d-7cdb51bb4c53)
 
-You can also check this video:
+## 4. Choose your application language
 
-[Watch the SSH-key video](https://github.com/user-attachments/assets/75f96eed-cb99-4b56-b27d-7cdb51bb4c53)
+The compute instance includes Java, Node.js, and Python. The original guide's environment includes the following versions; check your instance before you start.
 
-### 4. Which application languages are available?
+| Language | Versions shown in the original environment | Check your version |
+| --- | --- | --- |
+| Java | OpenJDK 17 and 21 | `java --version` |
+| Node.js | 16 | `node --version` |
+| Python | 3.9 | `python3 --version` |
 
-By default, the compute instance includes Java, NodeJS, and Python 3.
+### Switch Java versions
 
-#### Java
-
-The Java versions installed are OpenJDK 17 and 21.
-
-The `alternatives` system can be used to switch versions:
-
-```shell
-$ java --version
-openjdk 17.0.16 2025-07-15 LTS
-OpenJDK Runtime Environment (Red_Hat-17.0.16.0.8-2.0.1) (build 17.0.16+8-LTS)
-OpenJDK 64-Bit Server VM (Red_Hat-17.0.16.0.8-2.0.1) (build 17.0.16+8-LTS, mixed mode, sharing)
-
-$ sudo update-alternatives --config java
-
-There are 2 programs which provide 'java'.
-
-  Selection    Command
------------------------------------------------
-*+ 1           java-17-openjdk.aarch64 (/usr/lib/jvm/java-17-openjdk-17.0.16.0.8-2.0.1.el9.aarch64/bin/java)
-   2           java-21-openjdk.aarch64 (/usr/lib/jvm/java-21-openjdk-21.0.8.0.9-1.0.1.el9.aarch64/bin/java)
-
-Enter to keep the current selection[+], or type selection number: 2
-
-$ java --version
-openjdk 21.0.8 2025-07-15 LTS
-OpenJDK Runtime Environment (Red_Hat-21.0.8.0.9-1.0.1) (build 21.0.8+9-LTS)
-OpenJDK 64-Bit Server VM (Red_Hat-21.0.8.0.9-1.0.1) (build 21.0.8+9-LTS, mixed mode, sharing)
-```
-
-#### NodeJS
-
-The installed version of NodeJS is 16:
+Use the alternatives system to select an installed Java version:
 
 ```shell
-$ node --version
-v16.20.2
+sudo update-alternatives --config java
+java --version
 ```
 
-#### Python 3
+At the prompt, enter the number for the version you want to use.
 
-The default installed version of Python is 3.9:
+### Install Python 3.12
+
+If your application needs Python 3.12, install it alongside the default version:
 
 ```shell
-$ python --version
-Python 3.9.21
+sudo dnf install -y python312
+python3.12 --version
 ```
 
-But you can also install manually a newer version (3.12):
+Use `python3.12` when running applications that require this version.
 
-```shell
-$ sudo dnf install -y python312
-...
-$ python3.12 --version
-Python 3.12.9
-```
+[Watch the language setup walkthrough](https://github.com/user-attachments/assets/c2bd05d5-2af0-4ea3-917e-9eca31b3c1b0)
 
-You can see this in the video:
+## 5. Connect to MySQL HeatWave
 
-[Watch the language-installation video](https://github.com/user-attachments/assets/c2bd05d5-2af0-4ea3-917e-9eca31b3c1b0)
+**Prerequisite:** You selected MySQL HeatWave during deployment.
 
-### 5. Connect to MySQL HeatWave
+Choose one of these connection methods:
 
-You have multiple possibilities to connect to your MySQL HeatWave instance, and we will use three of them:
+| Method | Where you connect from | What you need |
+| --- | --- | --- |
+| MySQL Shell | The compute instance | SSH access and the database's private IP address |
+| MySQL Shell for Visual Studio Code | Your local machine | OCI API credentials and a bastion connection |
+| OCI Cloud Shell | The OCI Console | An ephemeral private network connected to your VCN and private subnet |
 
-1. using MySQL Shell in the command line via the compute instance
-2. using MySQL Shell for Visual Studio Code on your machine
-3. using Cloud Shell
+### Option A: MySQL Shell on the compute instance
 
-#### MySQL Shell in the command line
+MySQL Shell is already installed. Connect to the compute instance over SSH, then connect to your MySQL HeatWave DB system using its private IP address and the credentials you supplied during deployment.
 
-MySQL Shell is already installed on the Compute Instance. From it, when connected in SSH, you can launch MySQL Shell and connect to the MySQL HeatWave DBSystem using its private IP.
+[Watch the MySQL Shell walkthrough](https://github.com/user-attachments/assets/3d4e3030-d350-4600-bb54-c3c16f7344a4)
 
-Check the video:
+### Option B: MySQL Shell for Visual Studio Code
 
-[Watch the MySQL Shell video](https://github.com/user-attachments/assets/3d4e3030-d350-4600-bb54-c3c16f7344a4)
+On your local machine, create or update `~/.oci/config` with the OCI API key configuration for your user. Then use MySQL Shell for Visual Studio Code to connect to the DB system through a bastion host.
 
-#### MySQL Shell for Visual Studio Code
+[Watch the Visual Studio Code walkthrough](https://github.com/user-attachments/assets/0940835d-7b26-4cb9-b96a-b11ecb29de54)
 
-If we configure the OCI config on our machine, we can use MySQL for Visual Studio Code to connect to the MySQL HeatWave DBSystem via a bastion host.
+### Option C: OCI Cloud Shell
 
-We need to create or update our `~/.oci/config` file to use a new API Key for our user.
+Open Cloud Shell from the OCI Console. Configure an **ephemeral private network** using your VCN and private subnet, then connect to the DB system using its private IP address.
 
-Check the video with all the steps:
+[Watch the Cloud Shell walkthrough](https://github.com/user-attachments/assets/8fc02692-b81a-49f4-be8f-a8fe079b390e)
 
-[Watch the Visual Studio Code video](https://github.com/user-attachments/assets/0940835d-7b26-4cb9-b96a-b11ecb29de54)
+## 6. Use OCI Generative AI
 
-#### OCI Console's Cloud Shell
+OCI Generative AI lets you call models from your application using SDKs and generated sample code, including Java and Python examples.
 
-You can also use the Cloud Shell from the OCI Console to connect to your MySQL HeatWave DBSystem.
+### Generate sample code
 
-You need first to use an "Ephemeral private network" that uses your VCN and your private subnet:
-
-Then you connect using the DBSystem's private IP, like in the video:
-
-[Watch the Cloud Shell video](https://github.com/user-attachments/assets/8fc02692-b81a-49f4-be8f-a8fe079b390e)
-
-### 6. Use OCI GenAI
-
-You can use OCI GenAI Service directly in your code.
-
-We provide SDKs and sample code for several programming languages, including Java and Python.
-
-From the OCI Console, we go to the GenAI section:
+1. In the OCI Console, open **Generative AI**.
+2. Select a model available in your region.
+3. Choose an example prompt or enter your own.
+4. Copy the sample code for your preferred language.
 
 ![GenAI 01](https://github.com/user-attachments/assets/e6e51e37-c17b-450b-8c2d-a0ff254b4917)
 
-Depending on your region, you have access to different models:
-
 ![GenAI 02](https://github.com/user-attachments/assets/43440ac8-afa5-432e-b318-74c8e10ec6d8)
-
-We provide examples, or you can leave it blank:
 
 ![GenAI 03](https://github.com/user-attachments/assets/4adf7541-5812-4afc-8506-f940f5a51e00)
 
-Finally, you can copy the code for the programming language you prefer:
-
 ![GenAI 04](https://github.com/user-attachments/assets/e762828d-5ea0-4d5d-98ac-e0b8efa3f3df)
 
-The example uses the `~/.oci/config` file with your settings (same as we did in MySQL Shell Studio Code, but this time on our compute instance):
+### Run the example on your compute instance
+
+Configure `~/.oci/config` on the compute instance with the credentials used by the sample code. This follows the same configuration approach as the Visual Studio Code connection in step 5, but the file must be available on the machine running the code.
 
 ![GenAI Usage 1](https://github.com/user-attachments/assets/a3dba008-4694-4591-9a07-5f59e24ee588)
 
-We copied the code for Python, and we modified it just a little bit to add our input question:
+Save the generated Python example as `demo.py`, install the dependencies it requires, and update the input prompt.
 
 ![GenAI Usage 2](https://github.com/user-attachments/assets/588b5351-6b1c-4c2d-b20e-1f53a7c7b752)
 
-Then we run the demo:
+Run the example with the Python version you've configured:
 
 ```shell
-python demo.py
+python3 demo.py
 ```
 
 ![GenAI Usage 3](https://github.com/user-attachments/assets/65b77d2f-97aa-42b5-b04c-87a9bd2d3d46)
 
-Let's see all this in action in the video below:
+[Watch the OCI Generative AI walkthrough](https://github.com/user-attachments/assets/edb32d97-1532-44bf-a5b2-2269f7b24522)
 
-[Watch the OCI GenAI video](https://github.com/user-attachments/assets/edb32d97-1532-44bf-a5b2-2269f7b24522)
+## 7. Use MySQL HeatWave GenAI
 
-### 7. Use MySQL HeatWave GenAI
+**Prerequisite:** You deployed MySQL HeatWave and can connect to the DB system.
 
-It's also possible to directly use GenAI capabilities from the MySQL HeatWave database.
+You can also call GenAI procedures directly from MySQL HeatWave. Start by checking that your application can connect to the database, then call the GenAI procedure.
 
-When you are connected to the MySQL HeatWave instance you have deployed, you can call some MySQL HeatWave AI procedures from your program.
+### Install the Python connector
 
-#### Connecting in Python to your DB System
-
-To use MySQL in our Python application, we need to install the `python-mysql-connector`:
+On the compute instance:
 
 ```shell
-[opc@webserver ~]$ sudo dnf install -y pip
-[opc@webserver ~]$ pip install mysql-connector-python
+sudo dnf install -y pip
+python3 -m pip install mysql-connector-python
 ```
 
-We already saw how we can connect, now let's connect from an application (a minimal Python script running on our compute instance):
+Install the connector using the same Python interpreter you'll use to run your application.
+
+### Test the database connection
+
+Save this example as `test_hw.py`. Replace `<database-private-ip>`, `<mysql-user>`, and `<mysql-password>` with your deployment details.
 
 ```python
 import mysql.connector
 
 conn = mysql.connector.connect(
-        host = "10.0.1.57",
-        user = "admin",
-        password = "xxxxxxx"
-        )
+    host="<database-private-ip>",
+    user="<mysql-user>",
+    password="<mysql-password>",
+)
 
 cursor = conn.cursor()
+cursor.execute("SELECT @@version")
 
-cursor.execute("select @@vewrsion")
-rows = cursor.fetchall()
-
-for row in rows:
+for row in cursor.fetchall():
     print(row)
+
+cursor.close()
+conn.close()
 ```
 
-And when we run it, we can see:
+Run it:
 
 ```shell
-[opc@webserver ~]$ python test_hw.py
+python3 test_hw.py
+```
+
+The script prints your database version. For example:
+
+```text
 ('9.4.1-cloud',)
 ```
 
-#### Using MySQL HeatWave GenAI
+### Call HeatWave Chat
 
-We can do the same using a GenAI function provided by MySQL HeatWave:
+In the same script, replace the version query with:
 
 ```python
-import mysql.connector
-
-conn = mysql.connector.connect(
-        host = "10.0.1.57",
-        user = "admin",
-        password = "xxxxxxxx"
-        )
-
-cursor = conn.cursor()
-
-cursor.execute("call sys.HEATWAVE_CHAT(\"What is MySQL HeatWave?\")")
-rows = cursor.fetchall()
-
-for row in rows:
-    print(row)
+cursor.execute(
+    "CALL sys.HEATWAVE_CHAT(%s)",
+    ("What is MySQL HeatWave?",),
+)
 ```
 
-And this is the output:
+Run the script again to see the response.
 
 ![MySQL HeatWave GenAI](https://github.com/user-attachments/assets/1abff03a-29b2-49ce-b9ef-8e23b4b7fedf)
 
-#### MySQL HeatWave GenAI documentation
+See the [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html) for available capabilities and requirements.
 
-- [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
+[Watch the MySQL HeatWave GenAI walkthrough](https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90)
 
-Let's recap in video:
+## 8. Use MySQL REST Service
 
-[Watch the MySQL HeatWave GenAI video](https://github.com/user-attachments/assets/c3f3eb3f-3260-406b-9fd2-bbf828747c90)
+**Prerequisite:** You deployed the MySQL option and configured MySQL Shell for Visual Studio Code as described in step 5.
 
-### 8. Use MySQL REST Service (MRS)
+The starter kit deploys MySQL REST Service (MRS) with the MySQL configuration. MRS exposes database resources through REST endpoints so your application can work with data without writing SQL for each request. It can also expose selected HeatWave GenAI functionality.
 
-The starter kit deploys the MySQL REST Service automatically on OCI.
-
-This is the previous output:
-
-![MRS Previous](https://github.com/user-attachments/assets/598aebc0-1135-48c1-b9f2-0f9815347cef)
-
-And this is the new one:
+Review your deployment outputs for the service connection details:
 
 ![MRS New](https://github.com/user-attachments/assets/1b2ae153-0977-4375-ab61-18798bf0b2be)
 
-This enables us to provide access to data without requiring SQL. It also provides access to some Gen AI functionalities available in MySQL HeatWave.
+<details>
+<summary>Compare with the earlier deployment output</summary>
 
-#### Adding data to MRS using Visual Studio Code
+![MRS Previous](https://github.com/user-attachments/assets/598aebc0-1135-48c1-b9f2-0f9815347cef)
 
-To be able to use the MRS functionalities available in MySQL Shell for Visual Studio Code, we need to grant some privileges to our admin user:
+</details>
 
-```sql
-sql> GRANT 'mysql_rest_service_admin' TO 'admin'@'%';
-sql> SET DEFAULT ROLE ALL TO 'admin'@'%';
-```
+### Grant MRS administration access
 
-Note: Close the connection and reconnect for the grants to take effect immediately.
-
-We will use MySQL Shell for Visual Studio Code to create a new table and provide access to it using MRS.
+Connect to MySQL as your database administrator and grant the MRS role. The examples below use the `admin` account; substitute your account name if it differs.
 
 ```sql
-sql> create database myproject;
-sql> use myproject
-sql> create table myrecords (id int unsigned auto_increment primary key,
-                             name varchar(20),
-                             inserted timestamp default current_timestamp);
-sql> insert into myrecords values ('Scott'), ('Miguel'), ('Fred');
+GRANT 'mysql_rest_service_admin' TO 'admin'@'%';
+SET DEFAULT ROLE ALL TO 'admin'@'%';
 ```
 
-Then we need to add the schema and the table to the service:
+Disconnect and reconnect to activate the role in your session.
+
+### Create sample data
+
+In MySQL Shell for Visual Studio Code, create a database and table, then insert three records:
+
+```sql
+CREATE DATABASE myproject;
+USE myproject;
+
+CREATE TABLE myrecords (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(20),
+    inserted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO myrecords (name)
+VALUES ('Scott'), ('Miguel'), ('Fred');
+```
+
+### Expose the table through MRS
+
+1. Create a REST service named **MyService** with the request path `/myService`.
+2. Add the `myproject` schema and `myrecords` table to the service.
+3. If prompted to add the schema while adding the table, select **Yes**.
 
 ![MRS Setup 1](https://github.com/user-attachments/assets/0364cee8-9cb3-4529-8129-97455c4d870f)
-
-We call our service "MyService" and it's accessible using the path /myService:
 
 ![MRS Setup 2](https://github.com/user-attachments/assets/d91373f5-ceb3-4272-b79a-b8cd8b5a6240)
 
 ![MRS Setup 3](https://github.com/user-attachments/assets/49950897-0dd3-4528-b36d-02a7e15a7180)
 
-Then we need to add the schema and the table to the service:
-
 ![MRS Setup 4](https://github.com/user-attachments/assets/f54062f2-8ade-4f4b-b7f7-0ed774d351d7)
-
-Since the schema hasn't been added to the service (we used a shortcut), MySQL Shell prompts us to add it. We say "yes":
 
 ![MRS Schema Prompt](https://github.com/user-attachments/assets/4dcdc4d2-ceb1-46f9-a66a-300c58f4a58b)
 
 ![MRS Schema Add](https://github.com/user-attachments/assets/40674588-9bad-4dae-94aa-21f242f1e753)
 
-We also need to create a user to access our service. By default, the **MySQL App** is enabled.
+### Create a service user
+
+With the default **MySQL** authentication app enabled, create the user you'll use to sign in to the service:
 
 ```sql
-sql> create user myrest identified by 'myrestPassw0rd!';
+CREATE USER 'myrest' IDENTIFIED BY '<rest-password>';
 ```
 
-#### Accessing data using curl
+Replace `<rest-password>` with your chosen password. Use the same password in the requests below.
 
-In our compute instance, we can try to access our REST service using curl.
+### Access data with curl
 
-We need first to create a cookie (the easiest method with curl):
+On the compute instance, set the base URL to the MRS endpoint from your deployment outputs, including the `/myService` path:
 
 ```shell
-$ curl -c cookie.txt -k  -X POST  -H "Content-Type: application/json" \
-   -d '{"username": "myrest",
-        "password": "myrestPassw0rd!",
-        "authApp": "MySQL" }' \
-  https://10.0.1.57/myService/authentication/login
-{}
-$ curl -s -b cookie.txt -k -X GET  https://10.0.1.57/myService/myproject/myrecords | jq
-{
-  "items": [
-    {
-      "id": 1,
-      "name": "Scott",
-      "links": [...],
-      "inserted": "2025-09-25 09:52:39.000000",
-      "_metadata": {...}
-    }
-  ],
-  "limit": 25,
-  "offset": 0,
-  "hasMore": false,
-  "count": 3,
-  "links": [...]
-}
+MRS_BASE_URL='https://<mrs-host>/myService'
 ```
 
-We can also specify a single record:
+Authenticate and save the session cookie:
 
 ```shell
-$ curl -s -b cookie.txt -k -X GET  https://10.0.1.57/myService/myproject/myrecords/2 | jq
-{
-  "id": 2,
-  "name": "Fred",
-  "links": [...],
-  "inserted": "2025-09-25 09:52:39.000000",
-  "_metadata": {
-    "etag": "3E8174FCE3DBB38F0FA331E36460F9299C950522809213CC41A7AF954D0E83C4"
-  }
-}
+curl -c cookie.txt -k -X POST \
+  -H 'Content-Type: application/json' \
+  -d '{"username":"myrest","password":"<rest-password>","authApp":"MySQL"}' \
+  "$MRS_BASE_URL/authentication/login"
 ```
 
-Check the video to see the different steps in action:
+Retrieve the records:
 
-[Watch the MRS setup video](https://github.com/user-attachments/assets/8b7fc207-44a5-44db-8c64-399bbd878f2c)
+```shell
+curl -s -b cookie.txt -k \
+  "$MRS_BASE_URL/myproject/myrecords" | jq
+```
 
-#### Using the SDK
+The response contains the records and pagination metadata. To retrieve the record with ID `2`:
 
-We can also use the SDK, which is very simple.
+```shell
+curl -s -b cookie.txt -k \
+  "$MRS_BASE_URL/myproject/myrecords/2" | jq
+```
 
-We start by downloading the SDK of our service:
+For the sample data above, ID `2` corresponds to **Miguel**.
+
+The walkthrough uses `-k` for the demo endpoint's TLS certificate. This option skips certificate verification.
+
+[Watch the MRS setup walkthrough](https://github.com/user-attachments/assets/8b7fc207-44a5-44db-8c64-399bbd878f2c)
+
+### Access data with the Python SDK
+
+You can generate an SDK for your REST service in MySQL Shell for Visual Studio Code.
+
+1. Download the SDK for **MyService**.
+2. Select **Python** and set the service URL to the endpoint your compute instance can reach.
+3. Copy the downloaded SDK folder to the compute instance.
 
 ![SDK Download](https://github.com/user-attachments/assets/fa369b46-f616-4715-b010-b1b10d60c010)
-
-I modified the default address and selected Python language for the SDK:
 
 ![SDK Config](https://github.com/user-attachments/assets/968ad3ae-f11d-4b02-8712-fb9addefe231)
 
 ![SDK Package](https://github.com/user-attachments/assets/9c73e0c3-ec9b-4a0f-a3a8-ca1007db5b56)
 
-We copy that downloaded folder in our compute instance, and we need to rename it as sdk:
+The commands below assume the downloaded folder is named `myService.mrs.sdk`. Substitute the actual folder name if yours differs.
+
+Run this command on your **local machine**:
 
 ```shell
-[laptop]$ scp -i key.pem -r v1.mrs.sdk opc@<public_ip_of_the_compute>:
-
-[compute]$ mkdir myproject
-[compute]$ mv myService.mrs.sdk myproject/sdk
-[compute]$ cd myproject
+scp -i key.pem -r myService.mrs.sdk opc@<compute-public-ip>:
 ```
 
-And we create our Python application:
+Then run these commands on the **compute instance**:
+
+```shell
+mkdir -p myproject
+mv myService.mrs.sdk myproject/sdk
+cd myproject
+```
+
+Install the dependencies listed in the generated SDK's instructions using Python 3.12.
+
+Save your application as `project.py`. The example below follows the SDK layout and `read()` API shown in the original walkthrough:
 
 ```python
-from sdk.my_service import *
+import asyncio
+
+from sdk.my_service import MyService
 
 my_service = MyService(verify_tls_cert=False)
 
 async def main():
     await my_service.authenticate(
-            username = "myrest",
-            password = "myrestPassw0rd!",
-            )
+        username="myrest",
+        password="<rest-password>",
+    )
+
     records = await my_service.myproject.myrecords.read()
     for record in records:
         print(record.name)
+
     await my_service.myproject.myrecords.create(data={"name": "Lenka"})
 
 asyncio.run(main())
 ```
 
-And we can run it:
+Replace `<rest-password>` before running the script:
 
 ```shell
-[opc@webserver myproject]$ python3.12 project.py
-Scott
-Fred
-Miguel
+python3.12 project.py
 ```
 
-Check the video to see how to use the SDK:
+The script prints the existing names and inserts a new record for Lenka. Running it again inserts another record.
 
-[Watch the SDK video](https://github.com/user-attachments/assets/45e34c29-3eea-4804-a493-0736e0aedb1c)
+**SDK version note:** Generated module paths and methods vary by SDK version. The current [MRS SDK reference](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html) documents `find()` for reading records and an `app` argument for authentication. If your generated SDK differs from the walkthrough, follow its included examples and matching API documentation.
 
-#### Additional MRS documentation
+Like `curl -k`, `verify_tls_cert=False` skips certificate verification for this demo connection.
 
+[Watch the SDK walkthrough](https://github.com/user-attachments/assets/45e34c29-3eea-4804-a493-0736e0aedb1c)
+
+## Additional resources
+
+- [Starter Kit wiki](https://github.com/lefred/oci-hackathon-starterkit/wiki)
+- [Stack ZIP and v1.6 release](https://github.com/ScottStroz/oci-hackathon-starterkit/releases/tag/v1.6)
+- [Oracle Cloud Free Tier FAQ](https://www.oracle.com/cloud/free/faq/)
+- [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
 - [MRS quickstart](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/quickstart.html)
-- [MRS SDK documentation](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html)
+- [MRS SDK reference](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html)
