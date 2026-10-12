@@ -25,7 +25,7 @@ Complete steps 1–3 to deploy your environment and connect to the application s
 3. [Connect to the compute instance](#3-connect-to-the-compute-instance)
 4. [Choose your application language](#4-choose-your-application-language)
 5. [Connect to MySQL HeatWave](#5-connect-to-mysql-heatwave)
-6. [Use OCI Generative AI](#6-use-oci-generative-ai)
+6. [Use OCI Generative AI](#6-use-oci-generative-ai), including [API key and SDK setup](#set-up-your-oci-api-key-and-python-sdk)
 7. [Use MySQL HeatWave GenAI](#7-use-mysql-heatwave-genai)
 8. [Use MySQL REST Service](#8-use-mysql-rest-service)
 
@@ -171,11 +171,11 @@ At the prompt, enter the number for the version you want to use.
 If your application needs Python 3.12, install it alongside the default version:
 
 ```shell
-sudo dnf install -y python312
+sudo dnf install -y python3.12
 python3.12 --version
 ```
 
-Use `python3.12` when running applications that require this version.
+Use `python3.12` when running applications that require this version. See [Installing Python on Oracle Linux 9](https://docs.oracle.com/en/operating-systems/oracle-linux/9/python/python-InstallingPython.html) for package availability.
 
 [Watch the language setup walkthrough](https://github.com/user-attachments/assets/c2bd05d5-2af0-4ea3-917e-9eca31b3c1b0)
 
@@ -199,7 +199,7 @@ MySQL Shell is already installed. Connect to the compute instance over SSH, then
 
 ### Option B: MySQL Shell for Visual Studio Code
 
-On your local machine, create or update `~/.oci/config` with the OCI API key configuration for your user. Then use MySQL Shell for Visual Studio Code to connect to the DB system through a bastion host.
+On your local machine, follow the [API key and configuration steps](#set-up-your-oci-api-key-and-python-sdk) in section 6. Then use MySQL Shell for Visual Studio Code to connect to the DB system through a bastion host. The Python SDK installation is needed for the Python examples, not for this Visual Studio Code connection.
 
 [Watch the Visual Studio Code walkthrough](https://github.com/user-attachments/assets/0940835d-7b26-4cb9-b96a-b11ecb29de54)
 
@@ -213,13 +213,188 @@ Open Cloud Shell from the OCI Console. Configure an **ephemeral private network*
 
 OCI Generative AI lets you call models from your application using SDKs and generated sample code, including Java and Python examples.
 
+### Set up your OCI API key and Python SDK
+
+Complete this setup before running a Python example that uses OCI. Store the configuration and API private key on the machine running your code: your laptop for local development, or the compute instance for the examples below.
+
+The **API signing key** authenticates OCI API requests. Keep it separate from the **SSH key** (`key.pem`) used to connect to your compute instance.
+
+#### Generate and download the API key
+
+Start on your **local machine**. On macOS or Linux, create a credentials directory:
+
+```shell
+mkdir -p ~/.oci
+chmod 700 ~/.oci
+```
+
+In the OCI Console:
+
+1. Open the profile menu and select **User settings**.
+2. Open **API Keys** (your console layout may group these under **Tokens and keys**).
+3. Select **Add API Key → Generate API Key Pair**.
+4. Select **Download Private Key** before closing the dialog. Save the file as `~/.oci/oci_api_key.pem`; if it downloads elsewhere, move it there.
+5. Select **Add** to register the public key.
+6. Copy the **Configuration File Preview** snippet for the next step.
+
+For an existing key, use its actions menu and select **View configuration file** to retrieve the snippet. You must already have its private key; if you've lost it, generate a new pair. See [Oracle's API signing key instructions](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm).
+
+#### Create or update `~/.oci/config`
+
+Open the file in an editor:
+
+```shell
+nano ~/.oci/config
+```
+
+Paste the console snippet and update `key_file`. A complete profile looks like this:
+
+```ini
+[DEFAULT]
+user=<user-ocid>
+fingerprint=<api-key-fingerprint>
+tenancy=<tenancy-ocid>
+region=<oci-region>
+key_file=/absolute/path/to/.oci/oci_api_key.pem
+```
+
+Use the actual values from the console. On the compute instance, the key path is normally `/home/opc/.oci/oci_api_key.pem`. On your laptop, use the full path to the downloaded file.
+
+| Field | What to check |
+| --- | --- |
+| `user` | The OCID of the user whose API key you added |
+| `fingerprint` | The fingerprint of that same key |
+| `tenancy` | Your tenancy's OCID |
+| `region` | The region used by your application, for example `us-chicago-1`; for Generative AI, match the selected model's region |
+| `key_file` | The private key's location on the machine running your code |
+
+If `[DEFAULT]` already exists, update that section or add a named profile such as `[HACKATHON]`. Avoid duplicate `[DEFAULT]` sections. These examples use `DEFAULT`.
+
+Save the file, then restrict access:
+
+```shell
+chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
+```
+
+Keep private keys out of Git repositories and shared documents. See the [OCI configuration file reference](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm) for profile settings. If your key is passphrase-protected, supply its passphrase at runtime.
+
+#### Set up the credentials on the compute instance
+
+For a demo running on the compute instance, create its credentials directory over SSH:
+
+```shell
+mkdir -p ~/.oci
+chmod 700 ~/.oci
+```
+
+From your **local machine**, copy the API private key to the instance. These commands assume the local key is named `oci_api_key.pem` and the SSH key is `key.pem` in your current directory:
+
+```shell
+scp -i key.pem ~/.oci/oci_api_key.pem opc@<compute-public-ip>:.oci/oci_api_key.pem
+```
+
+If the destination key already exists, choose a different filename and update `key_file` accordingly.
+
+Back on the **compute instance**, create or update the configuration using the same console snippet:
+
+```shell
+nano ~/.oci/config
+```
+
+Set `key_file=/home/opc/.oci/oci_api_key.pem`, then protect both files:
+
+```shell
+chmod 600 ~/.oci/config ~/.oci/oci_api_key.pem
+```
+
+#### Install the Python SDK and dependencies
+
+On the **compute instance**, install Python 3.12 and pip, then create a project environment:
+
+```shell
+sudo dnf install -y python3.12 python3.12-pip
+mkdir -p ~/hackathon-app
+cd ~/hackathon-app
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install oci
+```
+
+The `python3.12-pip` package provides pip for this interpreter; see [Oracle Linux Python package installation](https://docs.oracle.com/en-us/iaas/oracle-linux/python/python-installing-third-party-packages.htm). The `oci` package installs the OCI Python SDK and its dependencies. A virtual environment keeps these separate from system packages. See the [OCI Python SDK installation guide](https://docs.oracle.com/en-us/iaas/tools/python/latest/installation.html).
+
+For **local development on macOS or Linux**, use an installed Python 3.12 interpreter and run the same commands starting at `mkdir -p ~/hackathon-app`; the `dnf` command is for the Oracle Linux compute instance.
+
+When you reconnect to the instance, activate the environment again:
+
+```shell
+cd ~/hackathon-app
+source .venv/bin/activate
+```
+
+With this environment active, `python` and `python -m pip` use the same interpreter. Install any additional packages required by your sample code into this environment. For example, the MySQL examples also require:
+
+```shell
+python -m pip install mysql-connector-python
+```
+
+#### Verify the local setup
+
+Save this as `check_oci.py` in your project folder:
+
+```python
+from pathlib import Path
+import oci
+
+config = oci.config.from_file()
+oci.config.validate_config(config)
+key_path = Path(config["key_file"]).expanduser()
+if not key_path.is_file():
+    raise FileNotFoundError(f"API private key not found: {key_path}")
+
+# Constructing a client also checks that the signing key can be loaded.
+client = oci.identity.IdentityClient(config)
+print(f"OCI SDK {oci.__version__}: configuration and signing key loaded")
+```
+
+Run it:
+
+```shell
+python check_oci.py
+```
+
+For a named profile, change the loading line to:
+
+```python
+config = oci.config.from_file(profile_name="HACKATHON")
+```
+
+This check loads the configuration and key locally. It doesn't make an API request or verify IAM permissions. Your user must have access to the services and compartment used by the demo. See the [Python SDK configuration guide](https://docs.oracle.com/en-us/iaas/tools/python/latest/configuration.html).
+
+#### Optional: install the OCI CLI
+
+The Python demo uses the SDK. If you also want the `oci` terminal command, install the CLI in your active environment:
+
+```shell
+python -m pip install oci-cli
+oci --version
+```
+
+The CLI can use the same `~/.oci/config`. See [Oracle's manual CLI installation guide](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/climanualinst.htm).
+
+#### Troubleshoot common setup issues
+
+- **`No module named oci`:** Activate `.venv` and run `python -m pip install oci` with the interpreter that runs your demo.
+- **Configuration or key file not found:** Check the files on the machine running your script and confirm the `key_file` path.
+- **Authentication error:** Check that the user OCID, fingerprint, and private key belong to the same registered API key.
+- **Permission or service access error:** Check the user's IAM policies, target compartment, service region, and the endpoint in the generated code.
+
 ### Generate sample code
 
 1. In the OCI Console, open **Generative AI**.
 2. Select a model available in your region.
 3. Choose an example prompt or enter your own.
 4. Copy the sample code for your preferred language.
-5. Please note that currently only **cohere, meta, and openAI GPT OSS models** are supported in the free trial. Grok and Gemini models are NOT supported.
 
 ![GenAI 01](https://github.com/user-attachments/assets/e6e51e37-c17b-450b-8c2d-a0ff254b4917)
 
@@ -231,18 +406,23 @@ OCI Generative AI lets you call models from your application using SDKs and gene
 
 ### Run the example on your compute instance
 
-Configure `~/.oci/config` on the compute instance with the credentials used by the sample code. This follows the same configuration approach as the Visual Studio Code connection in step 5, but the file must be available on the machine running the code.
+Complete the [API key and Python SDK setup](#set-up-your-oci-api-key-and-python-sdk) above on the compute instance, then activate your project environment:
+
+```shell
+cd ~/hackathon-app
+source .venv/bin/activate
+```
 
 ![GenAI Usage 1](https://github.com/user-attachments/assets/a3dba008-4694-4591-9a07-5f59e24ee588)
 
-Save the generated Python example as `demo.py`, install the dependencies it requires, and update the input prompt.
+Save the generated Python example as `~/hackathon-app/demo.py` and update the input prompt. Confirm that the code loads the configuration profile you created and uses the intended compartment and regional endpoint. Install any additional dependencies called out by the sample using `python -m pip install <package-name>`.
 
 ![GenAI Usage 2](https://github.com/user-attachments/assets/588b5351-6b1c-4c2d-b20e-1f53a7c7b752)
 
-Run the example with the Python version you've configured:
+Run the example from your active environment:
 
 ```shell
-python3 demo.py
+python demo.py
 ```
 
 ![GenAI Usage 3](https://github.com/user-attachments/assets/65b77d2f-97aa-42b5-b04c-87a9bd2d3d46)
@@ -257,14 +437,15 @@ You can also call GenAI procedures directly from MySQL HeatWave. Start by checki
 
 ### Install the Python connector
 
-On the compute instance:
+Use the project environment created in [section 6](#set-up-your-oci-api-key-and-python-sdk). On the compute instance:
 
 ```shell
-sudo dnf install -y pip
-python3 -m pip install mysql-connector-python
+cd ~/hackathon-app
+source .venv/bin/activate
+python -m pip install mysql-connector-python
 ```
 
-Install the connector using the same Python interpreter you'll use to run your application.
+Keep this environment active when running the scripts below. The MySQL examples use database credentials; they do not require OCI API credentials.
 
 ### Test the database connection
 
@@ -292,7 +473,7 @@ conn.close()
 Run it:
 
 ```shell
-python3 test_hw.py
+python test_hw.py
 ```
 
 The script prints your database version. For example:
