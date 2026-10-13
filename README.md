@@ -42,19 +42,19 @@ If you already have a fully provisioned OCI account and have completed MFA enrol
 
 Oracle may place a temporary authorization hold on your card for verification. See the [Oracle Cloud Free Tier FAQ](https://www.oracle.com/cloud/free/faq/) for payment and trial details.
 
-![OCI Signup](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-01.png)
+![OCI Signup](images/screenshot-01.png)
 
-![Customer Type](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-02.png)
+![Customer Type](images/screenshot-02.png)
 
-![Payment Method 1](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-03.png)
+![Payment Method 1](images/screenshot-03.png)
 
-![Payment Method 2](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-04.png)
+![Payment Method 2](images/screenshot-04.png)
 
 ### Wait for your account to be fully provisioned
 
 After you complete sign-up, you'll see **“Please wait while we finish setting up your account…”**. Allow Oracle to finish provisioning your account before continuing.
 
-![Account provisioning in progress](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-7-1.png)
+![Account provisioning in progress](images/account-setup-slide-7-1.png)
 
 > **You will receive an email with the subject “Your Oracle Cloud Account is Fully Provisioned”. Wait for this email before signing in and deploying the starter kit.**
 
@@ -67,11 +67,11 @@ Once you receive the provisioning email, open the [Oracle Cloud sign-in page](ht
 
 The screenshots show an example account. Enter your own cloud account name.
 
-![Enter the cloud account name selected during sign-up](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-8-1.png)
+![Enter the cloud account name selected during sign-up](images/account-setup-slide-8-1.png)
 
 On the next screen, enter the **username and password you selected during sign-up**, then select **Sign In**.
 
-![Sign in with your username and password](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-9-1.png)
+![Sign in with your username and password](images/account-setup-slide-9-1.png)
 
 ### Configure multifactor authentication (MFA)
 
@@ -79,7 +79,7 @@ During your first sign-in, follow the prompts to enroll in secure verification.
 
 1. On the **Enable Secure Verification** screen, select **Enable Secure Verification**.
 
-![Enable secure verification for your account](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-10-1.png)
+![Enable secure verification for your account](images/account-setup-slide-10-1.png)
 
 2. Select **Mobile App** as your verification method.
 3. **Download the Oracle Mobile Authenticator app** to your phone from the Apple App Store or Google Play Store.
@@ -87,21 +87,21 @@ During your first sign-in, follow the prompts to enroll in secure verification.
 5. Complete the verification prompts until the browser displays **Successfully Enrolled**.
 6. Select **Done**.
 
-![MFA enrollment completed successfully](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-12-1.png)
+![MFA enrollment completed successfully](images/account-setup-slide-12-1.png)
 
 ### Open the OCI Console home screen
 
 Once you're fully enrolled, you'll navigate to the **OCI Console home screen**. Check your trial status, then continue to step 2 to deploy the starter kit.
 
-![OCI Console home screen after account provisioning and MFA enrollment](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/account-setup-slide-13-1.png)
+![OCI Console home screen after account provisioning and MFA enrollment](images/account-setup-slide-13-1.png)
 
 ## 2. Deploy the starter kit
 
 With the OCI Console open, select **Deploy to Oracle Cloud** above or on the repository page. This opens the stack creation wizard in OCI Resource Manager.
 
-![Deployment Button](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-11.png)
+![Deployment Button](images/screenshot-11.png)
 
-![Resource Manager](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-12.png)
+![Resource Manager](images/screenshot-12.png)
 
 ### Choose your database
 
@@ -115,7 +115,7 @@ Select **MySQL HeatWave**, **Autonomous Database**, or **Both**.
 
 When MySQL HeatWave is selected, the stack defaults to the Always Free tier described in the original guide. You can choose a larger instance using trial or promotional credits. Review the selected configuration in the wizard before deploying.
 
-![MySQL Shape](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-13.png)
+![MySQL Shape](images/screenshot-13.png)
 
 ### Configure the application server
 
@@ -127,7 +127,7 @@ The compute instance defaults to:
 
 This is a paid AMD shape that can use trial or promotional credits. You can select another supported shape and adjust its OCPU and memory settings. OCI selects the fault domain automatically.
 
-![Application server configured with VM.Standard.E5.Flex, 1 OCPU, and 4 GB memory](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/compute-e5-flex.png)
+![Application server configured with VM.Standard.E5.Flex, 1 OCPU, and 4 GB memory](images/compute-e5-flex.png)
 
 ### Create and apply the stack
 
@@ -135,19 +135,19 @@ This is a paid AMD shape that can use trial or promotional credits. You can sele
 2. Select the option to **apply** the configuration.
 3. Select **Create** to start deploying the resources.
 
-![Apply Configuration](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-15.png)
+![Apply Configuration](images/screenshot-15.png)
 
 The deployment takes several minutes. Follow the job progress in Resource Manager and wait for the job to succeed.
 
-![Deployment Progress](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-16.png)
+![Deployment Progress](images/screenshot-16.png)
 
-![Deployment Complete](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-17.png)
+![Deployment Complete](images/screenshot-17.png)
 
 If the job fails, check its logs for the cause. For an **out-of-host-capacity** error, try another supported shape or retry later. E5 capacity is not guaranteed.
 
 When deployment finishes, review the outputs at the end of the job logs. You'll use the connection details in the next steps.
 
-![Deployment Output](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-18.png)
+![Deployment Output](images/screenshot-18.png)
 
 [Watch the deployment walkthrough](https://github.com/user-attachments/assets/3cda5c48-1189-4dc4-9036-b17ba17da71c)
 
@@ -162,9 +162,9 @@ You'll need the generated SSH private key and the compute instance's public IP a
 3. Copy the entire key into a local file named `key.pem`.
 4. Copy the compute instance's public IP address from the same screen.
 
-![Generated SSH private key and compute connection details](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-19.png)
+![Generated SSH private key and compute connection details](images/screenshot-19.png)
 
-![SSH private key saved to a local file](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-20.png)
+![SSH private key saved to a local file](images/screenshot-20.png)
 
 ### Open an SSH connection
 
@@ -180,7 +180,7 @@ Then connect as the `opc` user. Replace `<compute-public-ip>` with your instance
 ssh -i key.pem opc@<compute-public-ip>
 ```
 
-![SSH Connection](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-21.png)
+![SSH Connection](images/screenshot-21.png)
 
 You're now connected to the application server. Unless a step says otherwise, run the remaining shell commands on this instance.
 
@@ -437,11 +437,11 @@ The CLI can use the same `~/.oci/config`. See [Oracle's manual CLI installation 
 1. In the OCI Console, open **Generative AI → Playground → Chat**.
 2. Select your compartment and choose **`cohere.command-a-03-2025 v1.0`** from the **Model** menu. The screenshots use **US Midwest (Chicago)**.
 
-![Select the Cohere Command A model for the Free Trial](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/generative-ai-cohere-model.png)
+![Select the Cohere Command A model for the Free Trial](images/generative-ai-cohere-model.png)
 
 3. Choose an example prompt or enter your own. The screenshot below uses **Generate a job description** and shows the Cohere model's response.
 
-![Cohere model response in the Generative AI playground](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/generative-ai-cohere-playground.png)
+![Cohere model response in the Generative AI playground](images/generative-ai-cohere-playground.png)
 
 4. Select **View code**, choose **Python**, and copy the generated sample code. Generate the code after selecting Cohere so it uses the correct model and regional endpoint.
 
@@ -530,7 +530,7 @@ cursor.execute(
 
 Run the script again to see the response.
 
-![MySQL HeatWave GenAI](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-24.png)
+![MySQL HeatWave GenAI](images/screenshot-24.png)
 
 See the [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html) for available capabilities and requirements.
 
@@ -544,12 +544,12 @@ The starter kit deploys MySQL REST Service (MRS) with the MySQL configuration. M
 
 Review your deployment outputs for the service connection details:
 
-![MRS New](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-25.png)
+![MRS New](images/screenshot-25.png)
 
 <details>
 <summary>Compare with the earlier deployment output</summary>
 
-![MRS Previous](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-26.png)
+![MRS Previous](images/screenshot-26.png)
 
 </details>
 
@@ -588,16 +588,16 @@ VALUES ('Scott'), ('Miguel'), ('Fred');
 2. Add the `myproject` schema and `myrecords` table to the service.
 3. If prompted to add the schema while adding the table, select **Yes**.
 
-![MRS Setup 1](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-27.png)
+![MRS Setup 1](images/screenshot-27.png)
 
-![MRS Setup 2](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-28.png)
+![MRS Setup 2](images/screenshot-28.png)
 
-![MRS Setup 3](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-29.png)
+![MRS Setup 3](images/screenshot-29.png)
 
-![MRS Setup 4](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-30.png)
+![MRS Setup 4](images/screenshot-30.png)
 
 
-![MRS Schema Add](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-32.png)
+![MRS Schema Add](images/screenshot-32.png)
 
 ### Create a service user
 
@@ -654,11 +654,11 @@ You can generate an SDK for your REST service in MySQL Shell for Visual Studio C
 2. Select **Python** and set the service URL to the endpoint your compute instance can reach.
 3. Copy the downloaded SDK folder to the compute instance.
 
-![SDK Download](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-33.png)
+![SDK Download](images/screenshot-33.png)
 
-![SDK Config](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-34.png)
+![SDK Config](images/screenshot-34.png)
 
-![SDK Package](/Users/kailasjawadekar/.codex/.chatgpt-projects/g-p-6ac4345e75308191b28f9f0932343c45/outputs/images/screenshot-35.png)
+![SDK Package](images/screenshot-35.png)
 
 The commands below assume the downloaded folder is named `myService.mrs.sdk`. Substitute the actual folder name if yours differs.
 
