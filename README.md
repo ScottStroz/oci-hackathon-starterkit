@@ -41,13 +41,20 @@ If you already have a fully provisioned OCI account and have completed MFA enrol
 1. Open the [OCI sign-up page](https://signup.cloud.oracle.com/).
 2. Enter your email address. If you registered for hackathon promotional credits, use the same address.
 3. Follow the sign-up wizard and select **Individual** as your customer type.
-4. Provide a supported payment method to verify your identity and activate the trial.
+4. **Select US Midwest (Chicago) as your Home Region for maximum AI model availability during this hackathon.**
+5. Provide a supported payment method to verify your identity and activate the trial.
 
 Oracle may place a temporary authorization hold on your card for verification. See the [Oracle Cloud Free Tier FAQ](https://www.oracle.com/cloud/free/faq/) for payment and trial details.
 
 ![OCI Signup](images/screenshot-01.png)
 
 ![Customer Type](images/screenshot-02.png)
+
+### Select your Home Region
+
+**Select US Midwest (Chicago) as your Home Region for maximum AI model availability during this hackathon.** Make this selection during sign-up, before completing account creation. Your Home Region cannot be changed after this step.
+
+![Choose US Midwest (Chicago) in the Home Region menu](images/home-region-us-midwest-chicago.png)
 
 ![Payment Method 1](images/screenshot-03.png)
 
