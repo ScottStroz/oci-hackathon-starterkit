@@ -29,6 +29,9 @@ Complete steps 1–3 to deploy your environment and connect to the application s
 7. [Use MySQL HeatWave GenAI](#7-use-mysql-heatwave-genai)
 8. [Use MySQL REST Service](#8-use-mysql-rest-service)
 
+- [Additional resources](#additional-resources)
+- [Frequently asked questions](#frequently-asked-questions)
+
 Screenshots and sample version numbers illustrate the environment used to prepare this guide. Your console screens and installed versions may differ.
 
 ## 1. Create your OCI account
@@ -234,7 +237,29 @@ Choose one of these connection methods:
 
 ### Option A: MySQL Shell on the compute instance
 
-MySQL Shell is already installed. Connect to the compute instance over SSH, then connect to your MySQL HeatWave DB system using its private IP address and the credentials you supplied during deployment.
+MySQL Shell (`mysqlsh`) is already installed on the compute instance.
+
+1. Connect to the compute instance over SSH as described in [step 3](#3-connect-to-the-compute-instance).
+2. Find your MySQL HeatWave DB system's private IP address in the deployment outputs or on the DB system's **Connections** tab in the OCI Console.
+3. On the compute instance, run the following command. Replace `<private-ip>` with that address:
+
+```shell
+mysqlsh admin@<private-ip>
+```
+
+If you chose a different MySQL administrator username during deployment, replace `admin` with that username. When prompted, enter the MySQL password you supplied during deployment.
+
+Once connected, switch MySQL Shell to SQL mode to run the SQL examples in this guide:
+
+```text
+\sql
+```
+
+Check the connection:
+
+```sql
+SELECT @@version;
+```
 
 [Watch the MySQL Shell walkthrough](https://github.com/user-attachments/assets/3d4e3030-d350-4600-bb54-c3c16f7344a4)
 
@@ -724,3 +749,57 @@ Like `curl -k`, `verify_tls_cert=False` skips certificate verification for this 
 - [MySQL HeatWave GenAI documentation](https://dev.mysql.com/doc/heatwave/en/mys-hw-genai.html)
 - [MRS quickstart](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/quickstart.html)
 - [MRS SDK reference](https://dev.mysql.com/doc/dev/mysql-rest-service/latest/sdk.html)
+
+## Frequently asked questions
+
+### What does the starter kit actually do?
+
+It deploys the network, an application server, and your selected databases so you can spend more time building your project.
+
+### Do I need to know Terraform or cloud networking?
+
+You can deploy through the OCI Console using the guided Resource Manager stack. This guide walks through the settings.
+
+### Is everything free?
+
+Some resources use trial or promotional credits. The default E5.Flex application server and the stack's Autonomous Database configuration are paid resources. Free Trial and Always Free have different limits. See the [Oracle Free Tier FAQ](https://www.oracle.com/cloud/free/faq/).
+
+For your hackathon's credit amount and expiry, check with the organizers.
+
+### Why do I need a payment card? Will I be charged?
+
+Oracle uses it for identity verification and may place a temporary authorization hold. You must explicitly upgrade to a paid account before paid usage is billed. See the [Oracle Free Tier FAQ](https://www.oracle.com/cloud/free/faq/).
+
+### When can I start deploying?
+
+Wait for the **“Your Oracle Cloud Account is Fully Provisioned”** email, then sign in and complete MFA enrollment using Oracle Mobile Authenticator.
+
+### What if deployment fails?
+
+Open the Resource Manager job logs first. If the error says **out of host capacity**, try another supported compute shape or retry later.
+
+### Which database should I select?
+
+Choose MySQL HeatWave to follow this guide's MySQL, HeatWave GenAI, and REST examples. Choose Autonomous Database for a project that needs Oracle Database. Select both if your project needs both.
+
+### Which AI model should we use?
+
+Follow the workshop's **Cohere Command A** example. This Free Trial walkthrough uses Cohere rather than Grok. Match the model and region shown in [section 6](#generate-sample-code).
+
+### What's the difference between OCI Generative AI and HeatWave GenAI?
+
+OCI Generative AI is called from your application through an API or SDK. The HeatWave example calls a GenAI procedure directly from MySQL.
+
+### Are the SSH key and OCI API key the same?
+
+They're separate credentials. The SSH key connects you to the application server. The API signing key authenticates your application's OCI requests.
+
+### Why does my Python example say `No module named oci`?
+
+Activate the project's virtual environment and install the SDK with `python -m pip install oci`. Use that same environment to run the example. See the [API key and SDK setup](#set-up-your-oci-api-key-and-python-sdk) for the complete steps.
+
+### How do we clean up after the hackathon?
+
+Save your code and export any data you need, then run a **Destroy** job for the Resource Manager stack. This tears down the resources managed by that stack. See the [Destroy job instructions](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Tasks/create-job-destroy.htm).
+
+[Back to the table of contents](#follow-the-guide)
