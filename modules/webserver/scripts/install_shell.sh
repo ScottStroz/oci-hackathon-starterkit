@@ -11,18 +11,31 @@ yum install -y mysql-shell --enablerepo=mysql-tools-innovation-community
 # Install Maven first so any Java dependencies cannot override the default JDK.
 yum install -y maven
 
-# Install the latest Oracle JDK 27 build for the instance architecture.
-case "$(uname -m)" in
-  x86_64) jdk_arch=x64 ;;
-  aarch64) jdk_arch=aarch64 ;;
-  *) echo "Unsupported architecture for Oracle JDK 27: $(uname -m)" >&2; exit 1 ;;
-esac
-yum install -y "https://download.oracle.com/java/27/latest/jdk-27_linux-${jdk_arch}_bin.rpm" || exit 1
+# Discover Oracle JDK releases only from the Oracle Linux 9 OCI repository.
+# OCI Oracle Linux images include this repository configuration by default.
+jdk_repo=ol9_oci_included
+jdk_packages=$(dnf -q --refresh --disablerepo='*' --enablerepo="$jdk_repo" \
+  --setopt="${jdk_repo}.skip_if_unavailable=False" \
+  repoquery --available --archlist="$(uname -m)" \
+  --queryformat='%{name}' 'jdk-*-headful') || exit 1
+jdk_major=$(printf '%s\n' "$jdk_packages" \
+  | sed -n 's/^jdk-\([0-9][0-9]*\)-headful$/\1/p' | sort -nu | tail -n 1)
+if [ -z "$jdk_major" ]; then
+  echo "No Oracle JDK development package found in ${jdk_repo}." >&2
+  exit 1
+fi
 
-# The Oracle RPM maintains this symlink across JDK 27 updates.
-alternatives --set java "$(readlink -f /usr/java/jdk-27/bin/java)" || exit 1
-alternatives --set javac "$(readlink -f /usr/java/jdk-27/bin/javac)" || exit 1
-echo 'export JAVA_HOME=/usr/java/jdk-27' > /etc/profile.d/java.sh
+# Restrict the JDK source to Oracle; dependencies may use other enabled repos.
+jdk_package="jdk-${jdk_major}-headful"
+echo "Installing Oracle JDK ${jdk_major} from ${jdk_repo}."
+dnf -y --enablerepo="$jdk_repo" --setopt="${jdk_repo}.skip_if_unavailable=False" \
+  repository-packages "$jdk_repo" install "$jdk_package" || exit 1
+
+# The Oracle RPM maintains this symlink across updates of the selected major.
+jdk_home="/usr/java/jdk-${jdk_major}"
+alternatives --set java "$(readlink -f "${jdk_home}/bin/java")" || exit 1
+alternatives --set javac "$(readlink -f "${jdk_home}/bin/javac")" || exit 1
+printf 'export JAVA_HOME=%s\n' "$jdk_home" > /etc/profile.d/java.sh
 
 yum install -y npm
 yum install -y httpd

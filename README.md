@@ -123,7 +123,9 @@ By default, the compute instance includes Java, NodeJS, and Python 3.
 
 #### Java
 
-New compute instances install the latest Oracle JDK 27 build for their architecture (Intel/AMD x64 or Arm64). Oracle JDK 27 is the default for both `java` and `javac`, and `JAVA_HOME` is set to `/usr/java/jdk-27` for login shells. Maven is also installed.
+New compute instances query the Oracle Linux 9 OCI Included repository (`ol9_oci_included`) and install the highest available Oracle JDK major version for their architecture (Intel/AMD x64 or Arm64). The `jdk-<major>-headful` package provides the full development kit, including the compiler, and pulls in the matching headless runtime. Maven is also installed.
+
+The selected Oracle JDK is the default for both `java` and `javac`. Login shells set `JAVA_HOME` to `/usr/java/jdk-<major>` for that release.
 
 Verify the installed version after connecting:
 
@@ -133,7 +135,7 @@ $ javac --version
 $ mvn --version
 ```
 
-The exact JDK 27 update version depends on the latest build available when the instance is created. See [Oracle's Java downloads](https://www.oracle.com/java/technologies/downloads/#java27). Existing instances are not upgraded by this change.
+The version is selected at instance creation, so future major releases require no version edits to this script. Selection follows availability in Oracle's repository, which may lag a release announcement. If the repository cannot be queried or has no matching package, provisioning stops with an error. This requires the OCI repository configuration included in standard OCI Oracle Linux 9 images. See [Oracle's JDK repository guide](https://yum.oracle.com/oracle-linux-java.html). Existing instances are not automatically upgraded.
 
 #### NodeJS
 
