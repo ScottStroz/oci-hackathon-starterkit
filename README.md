@@ -123,32 +123,17 @@ By default, the compute instance includes Java, NodeJS, and Python 3.
 
 #### Java
 
-The Java versions installed are OpenJDK 17 and 21.
+New compute instances install the latest Oracle JDK 27 build for their architecture (Intel/AMD x64 or Arm64). Oracle JDK 27 is the default for both `java` and `javac`, and `JAVA_HOME` is set to `/usr/java/jdk-27` for login shells. Maven is also installed.
 
-The `alternatives` system can be used to switch versions:
+Verify the installed version after connecting:
 
 ```shell
 $ java --version
-openjdk 17.0.16 2025-07-15 LTS
-OpenJDK Runtime Environment (Red_Hat-17.0.16.0.8-2.0.1) (build 17.0.16+8-LTS)
-OpenJDK 64-Bit Server VM (Red_Hat-17.0.16.0.8-2.0.1) (build 17.0.16+8-LTS, mixed mode, sharing)
-
-$ sudo update-alternatives --config java
-
-There are 2 programs which provide 'java'.
-
-  Selection    Command
------------------------------------------------
-*+ 1           java-17-openjdk.aarch64 (/usr/lib/jvm/java-17-openjdk-17.0.16.0.8-2.0.1.el9.aarch64/bin/java)
-   2           java-21-openjdk.aarch64 (/usr/lib/jvm/java-21-openjdk-21.0.8.0.9-1.0.1.el9.aarch64/bin/java)
-
-Enter to keep the current selection[+], or type selection number: 2
-
-$ java --version
-openjdk 21.0.8 2025-07-15 LTS
-OpenJDK Runtime Environment (Red_Hat-21.0.8.0.9-1.0.1) (build 21.0.8+9-LTS)
-OpenJDK 64-Bit Server VM (Red_Hat-21.0.8.0.9-1.0.1) (build 21.0.8+9-LTS, mixed mode, sharing)
+$ javac --version
+$ mvn --version
 ```
+
+The exact JDK 27 update version depends on the latest build available when the instance is created. See [Oracle's Java downloads](https://www.oracle.com/java/technologies/downloads/#java27). Existing instances are not upgraded by this change.
 
 #### NodeJS
 

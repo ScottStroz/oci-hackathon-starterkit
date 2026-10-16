@@ -8,7 +8,22 @@ echo "23.1.48.99 dev.mysql.com" >> /etc/hosts
 # Install MySQL Community Edition 8.0
 rpm -ivh https://dev.mysql.com/get/mysql84-community-release-$(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/')-2.noarch.rpm
 yum install -y mysql-shell --enablerepo=mysql-tools-innovation-community
-yum install -y java-21-openjdk maven
+# Install Maven first so any Java dependencies cannot override the default JDK.
+yum install -y maven
+
+# Install the latest Oracle JDK 27 build for the instance architecture.
+case "$(uname -m)" in
+  x86_64) jdk_arch=x64 ;;
+  aarch64) jdk_arch=aarch64 ;;
+  *) echo "Unsupported architecture for Oracle JDK 27: $(uname -m)" >&2; exit 1 ;;
+esac
+yum install -y "https://download.oracle.com/java/27/latest/jdk-27_linux-${jdk_arch}_bin.rpm" || exit 1
+
+# The Oracle RPM maintains this symlink across JDK 27 updates.
+alternatives --set java "$(readlink -f /usr/java/jdk-27/bin/java)" || exit 1
+alternatives --set javac "$(readlink -f /usr/java/jdk-27/bin/javac)" || exit 1
+echo 'export JAVA_HOME=/usr/java/jdk-27' > /etc/profile.d/java.sh
+
 yum install -y npm
 yum install -y httpd
 
